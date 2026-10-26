@@ -1,0 +1,435 @@
+
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Laporan Penetration Test — DSK-DASH</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, "Segoe UI", system-ui, sans-serif; font-size: 14px; line-height: 1.6; background: #fff; color: #1f2328; }
+  .container { max-width: 760px; margin: 0 auto; padding: 32px 20px 60px; }
+  h1 { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+  h2 { font-size: 15px; font-weight: 700; margin: 28px 0 12px; border-bottom: 1px solid #e5e7eb; padding-bottom: 6px; }
+  h3 { font-size: 13px; font-weight: 600; margin: 0 0 4px; }
+  p { margin-bottom: 8px; }
+  ul, ol { padding-left: 20px; margin-bottom: 8px; }
+  li { margin-bottom: 3px; }
+  code { font-family: "SF Mono", "Fira Mono", monospace; font-size: 12px; background: #f7f8fa; border: 1px solid #e5e7eb; border-radius: 3px; padding: 1px 5px; }
+  pre { background: #f7f8fa; border: 1px solid #e5e7eb; border-radius: 6px; padding: 12px 14px; margin: 8px 0 12px; overflow-x: auto; font-size: 12px; }
+  .badge { display: inline-block; font-size: 11px; font-weight: 700; border-radius: 4px; padding: 2px 8px; text-transform: uppercase; letter-spacing: .3px; }
+  .critical  { background: #fee2e2; color: #991b1b; }
+  .high      { background: #fef3c7; color: #92400e; }
+  .medium    { background: #fef9c3; color: #854d0e; }
+  .low       { background: #dbeafe; color: #1e40af; }
+  .info-sev  { background: #f3f4f6; color: #374151; }
+  .fixed     { background: #d1fae5; color: #065f46; }
+  .open      { background: #fee2e2; color: #991b1b; }
+  .partial   { background: #fef3c7; color: #92400e; }
+  table { width: 100%; border-collapse: collapse; margin-bottom: 16px; font-size: 13px; }
+  th { background: #f7f8fa; text-align: left; padding: 8px 10px; border: 1px solid #e5e7eb; font-weight: 600; font-size: 12px; }
+  td { padding: 8px 10px; border: 1px solid #e5e7eb; vertical-align: top; }
+  tr:nth-child(even) td { background: #fafafa; }
+  .finding { background: #f7f8fa; border: 1px solid #e5e7eb; border-radius: 8px; padding: 14px 16px; margin-bottom: 14px; }
+  .finding-header { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
+  .finding-title { font-weight: 700; font-size: 14px; flex: 1; }
+  .finding-meta { font-size: 12px; color: #57606a; margin-bottom: 6px; }
+  .finding-meta code { font-size: 11px; }
+  .section-label { font-size: 11px; font-weight: 700; color: #57606a; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 3px; }
+  .fix-box { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 6px; padding: 10px 12px; margin-top: 8px; font-size: 13px; }
+  .summary-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 20px; }
+  .summary-card { text-align: center; padding: 12px 8px; border-radius: 8px; }
+  .summary-card .count { font-size: 26px; font-weight: 800; display: block; }
+  .summary-card .label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .3px; }
+  .sc-crit  { background: #fee2e2; color: #991b1b; }
+  .sc-high  { background: #fef3c7; color: #92400e; }
+  .sc-med   { background: #fef9c3; color: #854d0e; }
+  .sc-low   { background: #dbeafe; color: #1e40af; }
+  .sc-info  { background: #f3f4f6; color: #374151; }
+  hr { border: none; border-top: 1px solid #e5e7eb; margin: 24px 0; }
+  .warn { background: #fef9c3; border: 1px solid #fde047; border-radius: 6px; padding: 10px 14px; margin-bottom: 12px; font-size: 13px; }
+  .footer { text-align: center; color: #57606a; font-size: 12px; margin-top: 40px; padding-top: 16px; border-top: 1px solid #e5e7eb; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>Laporan Penetration Test — DSK-DASH</h1>
+<p style="color:#57606a;font-size:13px">CodeIgniter 4.7.4  |  PHP 8.2  |  Tanggal: September 2026  |  Scope: Source-Code Review (SAST)</p>
+
+<h2>Ringkasan Eksekutif</h2>
+<div class="summary-grid">
+  <div class="summary-card sc-crit"><span class="count">0</span><span class="label">Critical</span></div>
+  <div class="summary-card sc-high"><span class="count">4</span><span class="label">High</span></div>
+  <div class="summary-card sc-med"><span class="count">5</span><span class="label">Medium</span></div>
+  <div class="summary-card sc-low"><span class="count">3</span><span class="label">Low</span></div>
+  <div class="summary-card sc-info"><span class="count">3</span><span class="label">Info</span></div>
+</div>
+<p>Total <strong>15 temuan</strong> diidentifikasi melalui static analysis source code. Semua temuan dengan tingkat risiko <strong>High</strong> dan sebagian besar temuan <strong>Medium</strong> telah diperbaiki dalam sesi ini. Beberapa temuan memerlukan tindakan konfigurasi di server.</p>
+
+<h2>Tabel Ringkasan Temuan</h2>
+<table>
+  <thead>
+    <tr>
+      <th>#</th><th>Judul</th><th>Kategori</th><th>Tingkat</th><th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>PT-01</td><td>SQL Injection — KegiatanController &amp; RoController</td><td>Injection</td><td><span class="badge high">High</span></td><td><span class="badge fixed">✓ Fixed</span></td></tr>
+    <tr><td>PT-02</td><td>Path Traversal — LTK Download Endpoint</td><td>Path Traversal</td><td><span class="badge high">High</span></td><td><span class="badge fixed">✓ Fixed</span></td></tr>
+    <tr><td>PT-03</td><td>JWT Tanpa Token Revocation / Blacklist</td><td>Auth</td><td><span class="badge high">High</span></td><td><span class="badge fixed">✓ Fixed</span></td></tr>
+    <tr><td>PT-04</td><td>OTP Brute-forceable — 6 Digit, Tanpa Burn-on-Fail</td><td>Auth</td><td><span class="badge high">High</span></td><td><span class="badge fixed">✓ Fixed</span></td></tr>
+    <tr><td>PT-05</td><td>Demo Credentials Hardcode di Halaman Login</td><td>Info Disclosure</td><td><span class="badge medium">Medium</span></td><td><span class="badge fixed">✓ Fixed</span></td></tr>
+    <tr><td>PT-06</td><td>OTP Validation Mismatch (exact_length[6] tapi 8 digit)</td><td>Auth Logic</td><td><span class="badge medium">Medium</span></td><td><span class="badge fixed">✓ Fixed</span></td></tr>
+    <tr><td>PT-07</td><td>XSS di Email Template (toName, appName tidak di-escape)</td><td>XSS</td><td><span class="badge medium">Medium</span></td><td><span class="badge fixed">✓ Fixed</span></td></tr>
+    <tr><td>PT-08</td><td>Settings API Tanpa Whitelist Key</td><td>Business Logic</td><td><span class="badge medium">Medium</span></td><td><span class="badge fixed">✓ Fixed</span></td></tr>
+    <tr><td>PT-09</td><td>Security Headers Tidak Aktif</td><td>Config</td><td><span class="badge medium">Medium</span></td><td><span class="badge fixed">✓ Fixed</span></td></tr>
+    <tr><td>PT-10</td><td>CSRF tokenRandomize = false</td><td>CSRF</td><td><span class="badge medium">Medium</span></td><td><span class="badge fixed">✓ Fixed</span></td></tr>
+    <tr><td>PT-11</td><td>Tidak Ada Rate Limiting di Auth Endpoint</td><td>DoS / Brute-force</td><td><span class="badge medium">Medium</span></td><td><span class="badge fixed">✓ Fixed</span></td></tr>
+    <tr><td>PT-12</td><td>Password Minimum 6 Karakter</td><td>Auth</td><td><span class="badge low">Low</span></td><td><span class="badge fixed">✓ Fixed</span></td></tr>
+    <tr><td>PT-13</td><td>CI_ENVIRONMENT = development di Server</td><td>Config</td><td><span class="badge low">Low</span></td><td><span class="badge open">Needs Config</span></td></tr>
+    <tr><td>PT-14</td><td>CSP Header Tidak Aktif</td><td>Config</td><td><span class="badge low">Low</span></td><td><span class="badge open">Needs Config</span></td></tr>
+    <tr><td>PT-15</td><td>Google OAuth Callback Path Hardcode</td><td>Config</td><td><span class="badge info-sev">Info</span></td><td><span class="badge fixed">✓ Fixed</span></td></tr>
+  </tbody>
+</table>
+
+<hr />
+<h2>Detail Temuan</h2>
+
+
+<div class="finding">
+  <div class="finding-header">
+    <span class="badge high">HIGH</span>
+    <span class="finding-title">PT-01 — SQL Injection</span>
+    <span class="badge fixed">✓ Fixed</span>
+  </div>
+  <div class="finding-meta">
+    OWASP A03:2021 — Injection  | 
+    <code>KegiatanController.php:145</code>   <code>RoController.php:91</code>
+  </div>
+  <div class="section-label">Deskripsi</div>
+  <p>Variabel <code>$id</code> dari route parameter diinterpolasi langsung ke dalam raw SQL query tanpa parameterized binding.</p>
+  <pre>// VULNERABLE:
+$countOB = $db-&gt;query("SELECT COUNT(*) AS c FROM off_budget_sumber WHERE sumber_id = $id")
+$this-&gt;db-&gt;query("UPDATE kegiatan SET ro_id = NULL WHERE ro_id = $id")</pre>
+  <div class="fix-box">
+    <strong>Fix:</strong> Ganti dengan parameterized query menggunakan <code>?</code> placeholder:<br />
+    <code>$db-&gt;query("... WHERE sumber_id = ?", [$id])</code>
+  </div>
+</div>
+
+
+<div class="finding">
+  <div class="finding-header">
+    <span class="badge high">HIGH</span>
+    <span class="finding-title">PT-02 — Path Traversal di Download Endpoint</span>
+    <span class="badge fixed">✓ Fixed</span>
+  </div>
+  <div class="finding-meta">
+    OWASP A01:2021 — Broken Access Control  |  <code>Ltk/DokumenController.php:246</code>
+  </div>
+  <div class="section-label">Deskripsi</div>
+  <p>Path file diambil dari database (<code>file_pdf_path</code>), lalu langsung digabung ke <code>WRITEPATH . 'uploads/'</code> tanpa sanitasi. Jika database dikompromikan atau path dimanipulasi, file di luar direktori uploads bisa diakses — termasuk <code>.env</code>, log, dll.</p>
+  <pre>// VULNERABLE:
+$absPath = WRITEPATH . 'uploads/' . $relPath;  // tidak ada realpath() check</pre>
+  <div class="fix-box">
+    <strong>Fix:</strong> Tambahkan <code>realpath()</code> dan validasi bahwa path final berada di dalam <code>WRITEPATH/uploads/</code>. Tambah sanitasi filename untuk <code>Content-Disposition</code> header.
+  </div>
+</div>
+
+
+<div class="finding">
+  <div class="finding-header">
+    <span class="badge high">HIGH</span>
+    <span class="finding-title">PT-03 — JWT Tanpa Token Revocation / Blacklist</span>
+    <span class="badge fixed">✓ Fixed</span>
+  </div>
+  <div class="finding-meta">
+    OWASP A07:2021 — Identification and Authentication Failures  | 
+    <code>AuthController.php::logout</code>   <code>JwtAuthFilter.php</code>
+  </div>
+  <div class="section-label">Deskripsi</div>
+  <p>JWT bersifat stateless dan valid hingga waktu <code>exp</code>. Ketika user logout, token lama masih dapat digunakan hingga 24 jam ke depan (sesuai <code>jwt.expiry = 86400</code>). Jika token dicuri, penyerang dapat terus menggunakan token meski korban sudah logout.</p>
+  <div class="fix-box">
+    <strong>Fix:</strong> Buat tabel <code>revoked_tokens</code> yang menyimpan SHA-256 hash token yang di-logout. <code>JwtAuthFilter</code> mengecek blacklist setiap request. Cleanup otomatis saat token expired. <code>AuthController::logout</code> merevoke token aktif.
+  </div>
+</div>
+
+
+<div class="finding">
+  <div class="finding-header">
+    <span class="badge high">HIGH</span>
+    <span class="finding-title">PT-04 — OTP Brute-forceable</span>
+    <span class="badge fixed">✓ Fixed</span>
+  </div>
+  <div class="finding-meta">
+    OWASP A07:2021 — Auth Failures  |  <code>OtpModel.php</code>
+  </div>
+  <div class="section-label">Deskripsi</div>
+  <p>OTP 6 digit menghasilkan hanya 1 juta kombinasi. Dengan rate limit 10 req/60s, penyerang dapat melakukan exhaustive attack dalam ~1.67 jam (6,000 req/jam). Tidak ada mekanisme burn-on-fail.</p>
+  <div class="fix-box">
+    <strong>Fix:</strong> OTP diupgrade ke 8 digit (100 juta kombinasi). Tambah burn-on-fail: OTP dinonaktifkan (<code>used=1</code>) setelah satu percobaan gagal, memaksa user meminta OTP baru.
+  </div>
+</div>
+
+
+<div class="finding">
+  <div class="finding-header">
+    <span class="badge medium">MEDIUM</span>
+    <span class="finding-title">PT-05 — Demo Credentials Hardcode di Halaman Login</span>
+    <span class="badge fixed">✓ Fixed</span>
+  </div>
+  <div class="finding-meta">
+    OWASP A05:2021 — Security Misconfiguration  |  <code>Views/auth/login.php:77-82</code>
+  </div>
+  <div class="section-label">Deskripsi</div>
+  <p>Halaman login menampilkan akun dan password demo secara publik: <code>admin@instansi.go.id / admin123</code>, <code>password123</code>. Jika password production tidak diubah, penyerang dapat langsung login sebagai admin.</p>
+  <div class="fix-box">
+    <strong>Fix:</strong> Hapus seluruh blok <code>&lt;div class="demo"&gt;</code> dari halaman login.
+  </div>
+</div>
+
+
+<div class="finding">
+  <div class="finding-header">
+    <span class="badge medium">MEDIUM</span>
+    <span class="finding-title">PT-06 — OTP Validation Mismatch</span>
+    <span class="badge fixed">✓ Fixed</span>
+  </div>
+  <div class="finding-meta">
+    Logic Error  |  <code>AuthController.php::verifyOtp:267</code>
+  </div>
+  <div class="section-label">Deskripsi</div>
+  <p>OTP telah diupgrade ke 8 digit di <code>OtpModel</code>, tetapi validasi di <code>AuthController::verifyOtp</code> masih menggunakan <code>exact_length[6]</code>. Akibatnya, semua verifikasi OTP baru pasti gagal karena input 8 digit tidak lolos validasi 6 digit.</p>
+  <div class="fix-box">
+    <strong>Fix:</strong> Ubah <code>'otp' =&gt; 'required|exact_length[6]'</code> menjadi <code>exact_length[8]</code>. Juga perbaiki <code>login</code> validation dari <code>min_length[6]</code> ke <code>min_length[8]</code>.
+  </div>
+</div>
+
+
+<div class="finding">
+  <div class="finding-header">
+    <span class="badge medium">MEDIUM</span>
+    <span class="finding-title">PT-07 — XSS di Email Template</span>
+    <span class="badge fixed">✓ Fixed</span>
+  </div>
+  <div class="finding-meta">
+    OWASP A03:2021 — XSS  |  <code>Libraries/EmailService.php</code>
+  </div>
+  <div class="section-label">Deskripsi</div>
+  <p>Parameter <code>$toName</code> dan <code>$appName</code> yang berasal dari input user dan database disisipkan langsung ke dalam HTML email tanpa escaping. Penyerang yang memanipulasi nama akun bisa menyuntikkan HTML/JS ke email yang dikirim ke user lain.</p>
+  <div class="fix-box">
+    <strong>Fix:</strong> Semua variable user-supplied di-escape menggunakan <code>htmlspecialchars($val, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8')</code> sebelum dimasukkan ke body HTML email.
+  </div>
+</div>
+
+
+<div class="finding">
+  <div class="finding-header">
+    <span class="badge medium">MEDIUM</span>
+    <span class="finding-title">PT-08 — Settings API Tanpa Whitelist Key</span>
+    <span class="badge fixed">✓ Fixed</span>
+  </div>
+  <div class="finding-meta">
+    OWASP A04:2021 — Insecure Design  |  <code>AdminController.php::settingsUpdate</code>
+  </div>
+  <div class="section-label">Deskripsi</div>
+  <p>Endpoint <code>POST /api/v1/admin/settings</code> menerima key apapun dan menyimpannya ke tabel <code>app_settings</code>. Admin yang berhasil dikompromi dapat menulis key arbitrer seperti konfigurasi internal yang tidak seharusnya diubah via API.</p>
+  <div class="fix-box">
+    <strong>Fix:</strong> Tambahkan whitelist <code>$allowedKeys</code>. Request dengan key di luar whitelist dikembalikan dengan HTTP 422.
+  </div>
+</div>
+
+
+<div class="finding">
+  <div class="finding-header">
+    <span class="badge medium">MEDIUM</span>
+    <span class="finding-title">PT-09 — Security Headers Tidak Aktif</span>
+    <span class="badge fixed">✓ Fixed</span>
+  </div>
+  <div class="finding-meta">
+    OWASP A05:2021 — Security Misconfiguration  |  <code>Config/Filters.php</code>
+  </div>
+  <div class="section-label">Deskripsi</div>
+  <p>Filter <code>secureheaders</code> tersedia di CI4 tetapi di-comment-out di <code>$globals['after']</code>. Tanpa header ini, aplikasi rentan terhadap clickjacking (<code>X-Frame-Options</code>), MIME sniffing (<code>X-Content-Type-Options</code>), dan tidak memiliki <code>Referrer-Policy</code>.</p>
+  <div class="fix-box">
+    <strong>Fix:</strong> Aktifkan <code>'secureheaders'</code> di <code>$globals['after']</code>. CI4 SecureHeaders menambahkan: <code>X-Frame-Options: SAMEORIGIN</code>, <code>X-Content-Type-Options: nosniff</code>, <code>X-XSS-Protection: 1; mode=block</code>, <code>Referrer-Policy: same-origin</code>.
+  </div>
+</div>
+
+
+<div class="finding">
+  <div class="finding-header">
+    <span class="badge medium">MEDIUM</span>
+    <span class="finding-title">PT-10 — CSRF tokenRandomize = false</span>
+    <span class="badge fixed">✓ Fixed</span>
+  </div>
+  <div class="finding-meta">
+    OWASP A01:2021 — CSRF  |  <code>Config/Security.php</code>
+  </div>
+  <div class="section-label">Deskripsi</div>
+  <p>Dengan <code>tokenRandomize = false</code>, token CSRF tidak berubah antar request. Jika token bocor sekali (melalui log, referer header, dsb.), penyerang dapat menggunakannya berulang kali.</p>
+  <div class="fix-box">
+    <strong>Fix:</strong> Set <code>public bool $tokenRandomize = true</code> — token baru setiap request.
+  </div>
+</div>
+
+
+<div class="finding">
+  <div class="finding-header">
+    <span class="badge medium">MEDIUM</span>
+    <span class="finding-title">PT-11 — Tidak Ada Rate Limiting di Auth Endpoint</span>
+    <span class="badge fixed">✓ Fixed</span>
+  </div>
+  <div class="finding-meta">
+    OWASP A07:2021 — Auth Failures  |  <code>Config/Routes.php</code>
+  </div>
+  <div class="section-label">Deskripsi</div>
+  <p>Endpoint <code>auth/login</code>, <code>auth/verify-otp</code>, <code>auth/register</code>, <code>auth/send-otp</code>, dan <code>ltk/klien/register</code> tidak memiliki pembatasan request, memungkinkan credential stuffing dan OTP brute-force tanpa hambatan.</p>
+  <div class="fix-box">
+    <strong>Fix:</strong> Implementasi <code>RateLimit5Filter</code> (5 req/60s) dan <code>RateLimit10Filter</code> (10 req/60s) berbasis CI4 file cache per IP per endpoint. Response HTTP 429 dengan header <code>Retry-After</code>.
+  </div>
+</div>
+
+
+<div class="finding">
+  <div class="finding-header">
+    <span class="badge low">LOW</span>
+    <span class="finding-title">PT-12 — Password Minimum 6 Karakter</span>
+    <span class="badge fixed">✓ Fixed</span>
+  </div>
+  <div class="finding-meta">
+    OWASP A07:2021 — Auth Failures  |  <code>AdminController.php</code> <code>UserController.php</code> <code>AuthController.php</code>
+  </div>
+  <div class="section-label">Deskripsi</div>
+  <p>Beberapa endpoint validasi password menggunakan <code>min_length[6]</code>. Password 6 karakter rentan terhadap dictionary attack.</p>
+  <div class="fix-box">
+    <strong>Fix:</strong> Semua validasi password diubah ke <code>min_length[8]</code> secara konsisten.
+  </div>
+</div>
+
+
+<div class="finding">
+  <div class="finding-header">
+    <span class="badge low">LOW</span>
+    <span class="finding-title">PT-13 — CI_ENVIRONMENT = development di Production</span>
+    <span class="badge open">⚠ Perlu Tindakan</span>
+  </div>
+  <div class="finding-meta">
+    OWASP A05:2021 — Security Misconfiguration  |  <code>.env</code>
+  </div>
+  <div class="section-label">Deskripsi</div>
+  <p>File <code>.env</code> masih menggunakan <code>CI_ENVIRONMENT = development</code>. Dalam mode ini, CI4 menampilkan stack trace penuh termasuk path server, variabel, dan potensi sensitive data saat terjadi error.</p>
+  <div class="fix-box">
+    <strong>Tindakan (manual):</strong> Ubah di <code>.env</code>:
+    <pre>CI_ENVIRONMENT = production</pre>
+    Dalam production mode, error page menampilkan pesan generik tanpa stack trace.
+  </div>
+</div>
+
+
+<div class="finding">
+  <div class="finding-header">
+    <span class="badge low">LOW</span>
+    <span class="finding-title">PT-14 — Content Security Policy (CSP) Tidak Aktif</span>
+    <span class="badge open">⚠ Perlu Tindakan</span>
+  </div>
+  <div class="finding-meta">
+    OWASP A05:2021 — Security Misconfiguration  |  <code>Config/App.php</code>
+  </div>
+  <div class="section-label">Deskripsi</div>
+  <p><code>$CSPEnabled = false</code> — tidak ada Content Security Policy yang membatasi sumber script, style, dan resource. Tanpa CSP, serangan XSS yang berhasil menembus defense lain dapat mengeksekusi script arbitrary.</p>
+  <div class="fix-box">
+    <strong>Tindakan (manual):</strong> Aktifkan CSP bertahap — mulai dengan <code>report-only</code> mode untuk audit, lalu terapkan policy ketat. Atau tambahkan CSP header manual di <code>nginx/apache</code> dengan policy minimal:<br />
+    <code>default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'</code>
+  </div>
+</div>
+
+
+<div class="finding">
+  <div class="finding-header">
+    <span class="badge info-sev">INFO</span>
+    <span class="finding-title">PT-15 — Google OAuth Callback Path Hardcode</span>
+    <span class="badge fixed">✓ Fixed</span>
+  </div>
+  <div class="finding-meta">
+    Configuration Issue  |  <code>Views/auth/google_oauth_callback.php</code>
+  </div>
+  <div class="section-label">Deskripsi</div>
+  <p>File callback menggunakan hardcode <code>/api/v1/...</code> untuk fetch ke API. Pada deployment non-root (<code>/DSK-DASH/public/</code>), path tersebut salah dan OAuth flow gagal sepenuhnya.</p>
+  <div class="fix-box">
+    <strong>Fix:</strong> Inject <code>APP_BASE_URL</code> dan <code>APP_API_URL</code> dari PHP ke JavaScript menggunakan <code>base_url()</code>. Fetch API menggunakan <code>APP_API_URL</code> yang benar.
+  </div>
+</div>
+
+<hr />
+<h2>Temuan Tambahan: Informasi / Rekomendasi</h2>
+<table>
+  <thead>
+    <tr><th>Item</th><th>Status</th><th>Keterangan</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Credential Google disimpan di .env bukan database</td>
+      <td><span class="badge fixed">✓ Benar</span></td>
+      <td>Client ID &amp; Secret tidak pernah masuk ke database atau frontend. Refresh token tersimpan terenkripsi di DB.</td>
+    </tr>
+    <tr>
+      <td>JWT secret entropy</td>
+      <td><span class="badge fixed">✓ Cukup</span></td>
+      <td>45 karakter, ~274 bits entropy. Aman untuk HS256. Wajib diganti di production dengan nilai random yang lebih panjang.</td>
+    </tr>
+    <tr>
+      <td>HTTPS tidak di-force</td>
+      <td><span class="badge partial">⚠ Dev Only</span></td>
+      <td><code>forcehttps</code> dinonaktifkan untuk local dev. Wajib diaktifkan di production dengan uncomment di <code>Filters.php</code>.</td>
+    </tr>
+    <tr>
+      <td>Token disimpan di localStorage</td>
+      <td><span class="badge partial">⚠ Tradeoff</span></td>
+      <td>JWT disimpan di <code>localStorage</code> (XSS-accessible). Alternatif HttpOnly cookie lebih aman tetapi memerlukan perubahan arsitektur SPA. Dengan CSP yang ketat, risiko dapat dikurangi.</td>
+    </tr>
+    <tr>
+      <td>Audit Log tersedia</td>
+      <td><span class="badge fixed">✓ Ada</span></td>
+      <td>Semua aksi penting dicatat ke tabel <code>audit_log</code> dengan user, waktu, dan data before/after. Dapat diakses hanya oleh direktur dan TU.</td>
+    </tr>
+    <tr>
+      <td>Akun admin tidak bisa dihapus/downgrade oleh sesama admin</td>
+      <td><span class="badge fixed">✓ Terlindungi</span></td>
+      <td>Proteksi role escalation sudah ada di <code>UserController</code> dan <code>AdminController</code>.</td>
+    </tr>
+    <tr>
+      <td>File upload template (.docx)</td>
+      <td><span class="badge fixed">✓ Aman</span></td>
+      <td>Validasi ekstensi + MIME, nama file di-mapping ke nilai tetap (tidak dari input user), disimpan di <code>writable/</code> bukan <code>public/</code>.</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+<h2>Checklist Production Deployment</h2>
+<table>
+  <thead>
+    <tr><th>Item</th><th>Tindakan</th><th>Status</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>CI_ENVIRONMENT</td><td>Ubah ke <code>production</code> di <code>.env</code></td><td><span class="badge open">Manual</span></td></tr>
+    <tr><td>JWT Secret</td><td>Generate ulang dengan <code>openssl rand -base64 64</code></td><td><span class="badge open">Manual</span></td></tr>
+    <tr><td>Force HTTPS</td><td>Uncomment <code>'forcehttps'</code> di <code>Filters.php</code></td><td><span class="badge open">Manual</span></td></tr>
+    <tr><td>Password admin demo</td><td>Ubah password akun <code>admin@instansi.go.id</code> dan semua akun demo</td><td><span class="badge open">Manual</span></td></tr>
+    <tr><td>Google credentials</td><td>Isi <code>GOOGLE_CLIENT_ID</code>, <code>GOOGLE_CLIENT_SECRET</code> di <code>.env</code></td><td><span class="badge open">Manual</span></td></tr>
+    <tr><td>Encryption key</td><td>Generate dan set <code>encryption.key</code> di <code>.env</code></td><td><span class="badge open">Manual</span></td></tr>
+    <tr><td>Security Headers</td><td>Sudah aktif via <code>secureheaders</code> filter</td><td><span class="badge fixed">✓ Done</span></td></tr>
+    <tr><td>Rate Limiting</td><td>Auth endpoints sudah terlindungi</td><td><span class="badge fixed">✓ Done</span></td></tr>
+    <tr><td>CORS</td><td>Konfigurasi <code>allowedOrigins</code> jika diperlukan cross-origin</td><td><span class="badge partial">Review</span></td></tr>
+    <tr><td>CSP Header</td><td>Aktifkan di web server config atau CI4 App.php</td><td><span class="badge open">Manual</span></td></tr>
+    <tr><td>File permissions</td><td><code>writable/</code> harus tidak web-accessible; cek permissions</td><td><span class="badge partial">Review</span></td></tr>
+    <tr><td>Debug toolbar</td><td>Otomatis non-aktif di production CI_ENVIRONMENT</td><td><span class="badge fixed">✓ Auto</span></td></tr>
+    <tr><td>Token revocation</td><td>Tabel <code>revoked_tokens</code> sudah aktif</td><td><span class="badge fixed">✓ Done</span></td></tr>
+  </tbody>
+</table>
+
+<div class="footer">Made with IBM Bob</div>
+</div>
+</body>
+</html>

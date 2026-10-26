@@ -1,0 +1,687 @@
+
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>MKA System — System Assessment Report</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,"Segoe UI",system-ui,sans-serif;font-size:13.5px;line-height:1.65;color:#1f2328;background:#fff}
+.cover{background:#1e3a5f;color:#fff;padding:56px 60px 48px;page-break-after:always}
+.cover .label{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:#93c5fd;margin-bottom:10px}
+.cover h1{font-size:32px;font-weight:800;line-height:1.2;margin-bottom:8px}
+.cover .sub{font-size:15px;color:#bfdbfe;margin-bottom:32px}
+.cover .meta{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;border-top:1px solid #2d5a8e;padding-top:24px}
+.cover .meta-item .k{font-size:10px;color:#93c5fd;text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px}
+.cover .meta-item .v{font-size:13px;font-weight:600}
+.page{padding:40px 60px;max-width:900px;margin:0 auto}
+h2{font-size:18px;font-weight:800;color:#1e3a5f;border-bottom:2.5px solid #1e3a5f;padding-bottom:6px;margin:36px 0 16px}
+h3{font-size:14px;font-weight:700;color:#1e40af;margin:20px 0 8px}
+h4{font-size:12.5px;font-weight:700;color:#374151;margin:14px 0 6px;text-transform:uppercase;letter-spacing:.5px}
+p{margin-bottom:10px;color:#374151}
+ul,ol{padding-left:20px;margin-bottom:10px;color:#374151}
+li{margin-bottom:4px}
+.badge{display:inline-block;padding:2px 8px;border-radius:99px;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.4px}
+.badge-green{background:#dcfce7;color:#166534}
+.badge-red{background:#fee2e2;color:#991b1b}
+.badge-yellow{background:#fef9c3;color:#854d0e}
+.badge-blue{background:#dbeafe;color:#1e40af}
+.badge-gray{background:#f3f4f6;color:#4b5563}
+.badge-purple{background:#ede9fe;color:#5b21b6}
+.toc{background:#f8fafc;border:1px solid #e5e7eb;border-radius:10px;padding:20px 24px;margin-bottom:32px}
+.toc h3{margin-top:0;color:#1e3a5f}
+.toc ol{color:#374151;font-size:13px}
+.toc li{margin-bottom:3px}
+.toc a{color:#1e40af;text-decoration:none}
+.summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0}
+.stat-card{background:#f8fafc;border:1px solid #e5e7eb;border-radius:8px;padding:14px 12px;text-align:center}
+.stat-card .n{font-size:26px;font-weight:800;color:#1e3a5f}
+.stat-card .l{font-size:10.5px;color:#6b7280;margin-top:2px}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:12.5px}
+th{background:#1e3a5f;color:#fff;padding:8px 10px;text-align:left;font-weight:600;font-size:11.5px}
+td{padding:7px 10px;border-bottom:1px solid #e5e7eb;vertical-align:top}
+tr:nth-child(even) td{background:#f8fafc}
+.alert{border-radius:8px;padding:12px 16px;margin:12px 0;font-size:12.5px}
+.alert-info{background:#eff6ff;border-left:4px solid #3b82f6;color:#1e40af}
+.alert-warn{background:#fffbeb;border-left:4px solid #f59e0b;color:#92400e}
+.alert-danger{background:#fef2f2;border-left:4px solid #ef4444;color:#991b1b}
+.alert-success{background:#f0fdf4;border-left:4px solid #22c55e;color:#166534}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:12px 0}
+.card{background:#f8fafc;border:1px solid #e5e7eb;border-radius:8px;padding:14px 16px}
+.card h4{margin-top:0;margin-bottom:8px}
+.module-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0}
+.module-card{background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:12px 14px}
+.module-card .mtitle{font-size:12.5px;font-weight:700;color:#1e40af;margin-bottom:4px}
+.module-card .mdesc{font-size:11.5px;color:#6b7280}
+.flow{display:flex;flex-direction:column;gap:4px;margin:12px 0}
+.flow-step{display:flex;align-items:flex-start;gap:10px;font-size:12.5px}
+.flow-num{background:#1e3a5f;color:#fff;border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;margin-top:1px}
+.flow-arrow{color:#9ca3af;text-align:center;font-size:10px;padding-left:9px}
+.risk-table td:first-child{font-weight:600}
+.priority-high td:first-child{color:#991b1b}
+.priority-med td:first-child{color:#92400e}
+.priority-low td:first-child{color:#166534}
+.roadmap{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:12px 0}
+.roadmap-col{border-radius:8px;padding:14px;font-size:12px}
+.roadmap-col h4{font-size:11.5px;margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px}
+.roadmap-col ul{padding-left:16px;color:inherit}
+.roadmap-col li{margin-bottom:4px;font-size:11.5px}
+.rc1{background:#fef2f2;border-top:3px solid #ef4444;color:#991b1b}
+.rc1 h4{color:#991b1b}
+.rc2{background:#fffbeb;border-top:3px solid #f59e0b;color:#92400e}
+.rc2 h4{color:#92400e}
+.rc3{background:#eff6ff;border-top:3px solid #3b82f6;color:#1e40af}
+.rc3 h4{color:#1e40af}
+.rc4{background:#f0fdf4;border-top:3px solid #22c55e;color:#166534}
+.rc4 h4{color:#166534}
+.erd-box{background:#1e293b;color:#e2e8f0;border-radius:8px;padding:16px;font-size:11px;font-family:"Courier New",monospace;margin:12px 0;line-height:1.8;overflow-x:auto;white-space:pre}
+.section-divider{border:none;border-top:1px solid #e5e7eb;margin:32px 0}
+.footer{text-align:center;font-size:11px;color:#9ca3af;border-top:1px solid #e5e7eb;padding:16px;margin-top:48px}
+.exec-bullets{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0}
+.exec-bullet{background:#f0fdf4;border-left:3px solid #22c55e;border-radius:0 6px 6px 0;padding:8px 12px;font-size:12px;color:#166534}
+.exec-bullet.warn{background:#fef2f2;border-color:#ef4444;color:#991b1b}
+.exec-bullet.info{background:#eff6ff;border-color:#3b82f6;color:#1e40af}
+@media print{.page{padding:24px 40px}}
+</style>
+</head>
+<body>
+
+
+<div class="cover">
+  <div class="label">System Assessment Report · Confidential</div>
+  <h1>MKA System</h1>
+  <div class="sub">Monitoring Kegiatan Internal Direktorat Sistem Kearsipan — ANRI</div>
+  <div class="meta">
+    <div class="meta-item"><div class="k">Tanggal</div><div class="v">September 2026</div></div>
+    <div class="meta-item"><div class="k">Framework</div><div class="v">CodeIgniter 4 · MySQL</div></div>
+    <div class="meta-item"><div class="k">Status Sistem</div><div class="v">✅ Production-Ready</div></div>
+    <div class="meta-item"><div class="k">Total Modul</div><div class="v">9 Modul Utama</div></div>
+    <div class="meta-item"><div class="k">API Endpoint</div><div class="v">~150+ Endpoint</div></div>
+    <div class="meta-item"><div class="k">Database Tabel</div><div class="v">~45 Tabel</div></div>
+  </div>
+</div>
+
+<div class="page">
+
+
+<div class="toc">
+  <h3>Daftar Isi</h3>
+  <ol>
+    <li><a href="#exec">Executive Summary</a></li>
+    <li><a href="#bisnis">Business Process Analysis</a></li>
+    <li><a href="#modul">Analisis Modul</a></li>
+    <li><a href="#arsitektur">Arsitektur Sistem</a></li>
+    <li><a href="#database">Database &amp; ERD</a></li>
+    <li><a href="#role">Analisis User Role</a></li>
+    <li><a href="#uiux">UI/UX Review</a></li>
+    <li><a href="#security">Security Review</a></li>
+    <li><a href="#teknis">Technical Debt &amp; Code Review</a></li>
+    <li><a href="#gap">Gap Analysis</a></li>
+    <li><a href="#risk">Risk Analysis</a></li>
+    <li><a href="#rekomendasi">Rekomendasi &amp; Roadmap</a></li>
+    <li><a href="#kesimpulan">Kesimpulan</a></li>
+  </ol>
+</div>
+
+
+<div class="summary-grid">
+  <div class="stat-card"><div class="n">54</div><div class="l">Database Migrations</div></div>
+  <div class="stat-card"><div class="n">40+</div><div class="l">Model Classes</div></div>
+  <div class="stat-card"><div class="n">37+</div><div class="l">API Controllers</div></div>
+  <div class="stat-card"><div class="n">150+</div><div class="l">API Endpoints</div></div>
+  <div class="stat-card"><div class="n">8</div><div class="l">User Roles</div></div>
+  <div class="stat-card"><div class="n">21</div><div class="l">Status Workflow LTK</div></div>
+  <div class="stat-card"><div class="n">17</div><div class="l">JS Frontend Modules</div></div>
+  <div class="stat-card"><div class="n">45+</div><div class="l">Database Tables</div></div>
+</div>
+
+<hr class="section-divider" />
+
+
+<h2 id="exec">1. Executive Summary</h2>
+<p>MKA System adalah aplikasi <strong>Monitoring Kegiatan Internal</strong> yang dikembangkan untuk Direktorat Sistem Kearsipan ANRI. Sistem ini telah berkembang dari monitoring kegiatan on-budget/off-budget sederhana menjadi platform terintegrasi yang mencakup manajemen anggaran, dokumen, jadwal, dan layanan telaah konsep kebijakan.</p>
+
+<div class="exec-bullets">
+  <div class="exec-bullet">✅ Arsitektur RESTful API + SPA sudah tepat dan skalabel</div>
+  <div class="exec-bullet">✅ Modul LTK memiliki workflow engine 21 status yang lengkap</div>
+  <div class="exec-bullet">✅ JWT custom dengan RBAC 8 role berfungsi baik</div>
+  <div class="exec-bullet">✅ Integrasi Google Calendar OAuth2 sudah berjalan</div>
+  <div class="exec-bullet warn">⚠️ Tidak ada unit test — risiko regresi tinggi</div>
+  <div class="exec-bullet warn">⚠️ Token disimpan di localStorage — risiko XSS</div>
+  <div class="exec-bullet info">ℹ️ SERASI SharePoint integration belum dimanfaatkan optimal</div>
+  <div class="exec-bullet info">ℹ️ Pelaporan belum mencakup dashboard eksekutif visual</div>
+</div>
+
+<div class="alert alert-info">
+  <strong>Penilaian Keseluruhan:</strong> Sistem berada pada kondisi <strong>Production-Ready dengan Kompleksitas Tinggi</strong>. Kematangan teknis di atas rata-rata untuk sistem internal pemerintah. Prioritas utama pengembangan berikutnya adalah stabilisasi (testing, security hardening) dan peningkatan UX mobile.
+</div>
+
+<hr class="section-divider" />
+
+
+<h2 id="bisnis">2. Business Process Analysis</h2>
+
+<h3>2.1 Proses Bisnis yang Berjalan</h3>
+<div class="two-col">
+  <div class="card">
+    <h4>On-Budget Monitoring</h4>
+    <ul>
+      <li>Input kegiatan + pagu anggaran</li>
+      <li>Breakdown rincian komponen anggaran</li>
+      <li>Input realisasi per periode</li>
+      <li>Rencana Penarikan Dana (RPD)</li>
+      <li>Laporan progres &amp; serapan</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4>Off-Budget Monitoring</h4>
+    <ul>
+      <li>Input kegiatan non-APBN</li>
+      <li>Sumber pendanaan alternatif</li>
+      <li>Rincian pengeluaran off-budget</li>
+      <li>Monitoring per sumber dana</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4>Layanan Telaah Konsep (LTK)</h4>
+    <ul>
+      <li>Registrasi klien eksternal</li>
+      <li>Pengajuan permohonan telaah</li>
+      <li>Antrian + prioritisasi</li>
+      <li>Penugasan PIC + asesmen</li>
+      <li>Penerbitan Policy Brief/Paper</li>
+      <li>SLA monitoring 6/28 hari kerja</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4>Manajemen Jadwal</h4>
+    <ul>
+      <li>CRUD agenda internal</li>
+      <li>FullCalendar visualisasi</li>
+      <li>Sinkronisasi Google Calendar</li>
+      <li>Pengingat H-7, H-3, H-1</li>
+      <li>Import event dari Google</li>
+    </ul>
+  </div>
+</div>
+
+<h3>2.2 Aktor dan Alur Kerja</h3>
+<table>
+  <tr><th>Aktor</th><th>Proses Utama</th><th>Modul Terkait</th></tr>
+  <tr><td><span class="badge badge-blue">Admin</span></td><td>Konfigurasi sistem, manajemen pengguna, pengaturan global</td><td>Admin, Settings, Schedule</td></tr>
+  <tr><td><span class="badge badge-purple">Direktur</span></td><td>Monitor kegiatan, lihat laporan, persetujuan</td><td>Kegiatan, Dashboard, Laporan</td></tr>
+  <tr><td><span class="badge badge-green">TU</span></td><td>Verifikasi klien, antrian LTK, penugasan PIC</td><td>LTK, Notifikasi</td></tr>
+  <tr><td><span class="badge badge-blue">Ketua Tim</span></td><td>CRUD kegiatan, manajemen tim, upload dokumen</td><td>Kegiatan, Tim, Dokumen</td></tr>
+  <tr><td><span class="badge badge-gray">Anggota Tim</span></td><td>Update task, upload attachment, input realisasi</td><td>Task, Anggaran</td></tr>
+  <tr><td><span class="badge badge-yellow">Perencana</span></td><td>Input rincian anggaran, RPD</td><td>Anggaran, RPD</td></tr>
+  <tr><td><span class="badge badge-purple">PIC Telaah</span></td><td>Terima tugas, asesmen, susun Policy Brief/Paper</td><td>LTK PIC, Dokumen</td></tr>
+  <tr><td><span class="badge badge-gray">Klien</span></td><td>Registrasi, submit permohonan, pantau timeline</td><td>LTK Klien, Timeline</td></tr>
+</table>
+
+<h3>2.3 Alur LTK — Status Workflow</h3>
+<div class="flow">
+  <div class="flow-step"><div class="flow-num">1</div><div><strong>Draft</strong> → Klien mengisi form permohonan dinamis</div></div>
+  <div class="flow-arrow">↓</div>
+  <div class="flow-step"><div class="flow-num">2</div><div><strong>Menunggu Pengiriman ke SRIKANDI</strong> → Nota Dinas otomatis digenerate (DOCX/PDF)</div></div>
+  <div class="flow-arrow">↓</div>
+  <div class="flow-step"><div class="flow-num">3</div><div><strong>Menunggu Verifikasi TU</strong> → Klien kirim via SRIKANDI → TU input nomor ND</div></div>
+  <div class="flow-arrow">↓</div>
+  <div class="flow-step"><div class="flow-num">4</div><div><strong>Terverifikasi → Masuk Antrian</strong> → TU set prioritas (Regular/Prioritas)</div></div>
+  <div class="flow-arrow">↓</div>
+  <div class="flow-step"><div class="flow-num">5</div><div><strong>Ditugaskan PIC</strong> → TU pilih PIC → <strong>Diterima PIC</strong> → SLA mulai berjalan</div></div>
+  <div class="flow-arrow">↓</div>
+  <div class="flow-step"><div class="flow-num">6</div><div><strong>Asesmen Awal</strong> → PIC menilai substansi kajian</div></div>
+  <div class="flow-arrow">↓ (bercabang)</div>
+  <div class="flow-step"><div class="flow-num">A</div><div><strong>Skenario A</strong> (tidak perlu tindak lanjut, SLA 6 HK): Policy Brief → ND Tanggapan → <strong>Selesai</strong></div></div>
+  <div class="flow-step"><div class="flow-num">B</div><div><strong>Skenario B</strong> (perlu tindak lanjut, SLA 28 HK): Policy Brief → ND Permintaan Penyesuaian → Kajian Lanjutan → Policy Paper → ND Hasil → <strong>Selesai</strong></div></div>
+</div>
+
+<hr class="section-divider" />
+
+
+<h2 id="modul">3. Analisis Modul</h2>
+
+<div class="module-grid">
+  <div class="module-card">
+    <div class="mtitle">1. Autentikasi &amp; Profil</div>
+    <div class="mdesc">Login JWT, OTP email, register, change password, profil user</div>
+    <div style="margin-top:6px"><span class="badge badge-green">Lengkap</span></div>
+  </div>
+  <div class="module-card">
+    <div class="mtitle">2. Kegiatan (On-Budget)</div>
+    <div class="mdesc">CRUD kegiatan, sub-task, pagu anggaran, upload dokumen, RO</div>
+    <div style="margin-top:6px"><span class="badge badge-green">Lengkap</span></div>
+  </div>
+  <div class="module-card">
+    <div class="mtitle">3. Off-Budget</div>
+    <div class="mdesc">Kegiatan non-APBN, sumber dana alternatif, rincian pengeluaran</div>
+    <div style="margin-top:6px"><span class="badge badge-green">Lengkap</span></div>
+  </div>
+  <div class="module-card">
+    <div class="mtitle">4. Anggaran &amp; RPD</div>
+    <div class="mdesc">Rincian anggaran, realisasi, Rencana Penarikan Dana per periode</div>
+    <div style="margin-top:6px"><span class="badge badge-green">Lengkap</span></div>
+  </div>
+  <div class="module-card">
+    <div class="mtitle">5. Manajemen Tim</div>
+    <div class="mdesc">CRUD tim, anggota, ketua tim, role per anggota</div>
+    <div style="margin-top:6px"><span class="badge badge-green">Lengkap</span></div>
+  </div>
+  <div class="module-card">
+    <div class="mtitle">6. SERASI v2</div>
+    <div class="mdesc">Manajemen dokumen, folder, tag, integrasi SharePoint REST API</div>
+    <div style="margin-top:6px"><span class="badge badge-yellow">Parsial</span></div>
+  </div>
+  <div class="module-card">
+    <div class="mtitle">7. LTK — Telaah Konsep</div>
+    <div class="mdesc">Workflow 21 status, form builder dinamis, SLA, Policy Brief/Paper, Nota Dinas auto-generate</div>
+    <div style="margin-top:6px"><span class="badge badge-green">Lengkap</span></div>
+  </div>
+  <div class="module-card">
+    <div class="mtitle">8. Schedule &amp; Google Calendar</div>
+    <div class="mdesc">FullCalendar, CRUD agenda, peserta, OAuth2 Google, sinkronisasi dua arah, import multi-kalender</div>
+    <div style="margin-top:6px"><span class="badge badge-green">Lengkap</span></div>
+  </div>
+  <div class="module-card">
+    <div class="mtitle">9. Admin &amp; Laporan</div>
+    <div class="mdesc">Pengaturan sistem, manajemen pengguna, audit log, laporan progres &amp; anggaran, laporan LTK (10 jenis)</div>
+    <div style="margin-top:6px"><span class="badge badge-green">Lengkap</span></div>
+  </div>
+</div>
+
+<h3>3.1 Matriks Modul vs Fungsi</h3>
+<table>
+  <tr><th>Modul</th><th>CRUD</th><th>Laporan</th><th>Notifikasi</th><th>Dokumen</th><th>Integrasi Ext.</th></tr>
+  <tr><td>Kegiatan</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td><td>—</td></tr>
+  <tr><td>Off-Budget</td><td>✅</td><td>Parsial</td><td>—</td><td>—</td><td>—</td></tr>
+  <tr><td>Anggaran/RPD</td><td>✅</td><td>✅</td><td>—</td><td>—</td><td>—</td></tr>
+  <tr><td>LTK</td><td>✅</td><td>✅ (10 jenis)</td><td>✅</td><td>✅ DOCX/PDF</td><td>SRIKANDI (manual)</td></tr>
+  <tr><td>Schedule</td><td>✅</td><td>—</td><td>✅ (H-7/3/1)</td><td>—</td><td>Google Calendar</td></tr>
+  <tr><td>SERASI</td><td>✅</td><td>—</td><td>—</td><td>✅</td><td>SharePoint</td></tr>
+  <tr><td>Admin</td><td>✅</td><td>✅</td><td>—</td><td>—</td><td>SMTP Email</td></tr>
+</table>
+
+<hr class="section-divider" />
+
+
+<h2 id="arsitektur">4. Arsitektur Sistem</h2>
+
+<h3>4.1 Pola Arsitektur</h3>
+<div class="two-col">
+  <div class="card">
+    <h4>Backend</h4>
+    <ul>
+      <li><strong>Framework:</strong> CodeIgniter 4 (PHP 8.3)</li>
+      <li><strong>Pola:</strong> RESTful API — setiap fitur punya endpoint JSON</li>
+      <li><strong>Auth:</strong> Custom JWT HS256 tanpa library eksternal</li>
+      <li><strong>ORM:</strong> CI4 Query Builder + Model</li>
+      <li><strong>Base Controller:</strong> <code>BaseApiController</code> — RBAC, helpers, audit log</li>
+      <li><strong>Database:</strong> MySQL, soft-delete (deleted_at)</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4>Frontend</h4>
+    <ul>
+      <li><strong>Pola:</strong> SPA — single <code>app.php</code> shell, routing via JS switch</li>
+      <li><strong>Framework CSS:</strong> Bootstrap 5 + AdminLTE</li>
+      <li><strong>Routing:</strong> <code>loadPage(page)</code> di <code>core.js</code></li>
+      <li><strong>State:</strong> localStorage (mka_token, mka_user)</li>
+      <li><strong>API Layer:</strong> <code>apiGet/apiPost/apiPut/apiDelete</code> wrappers</li>
+      <li><strong>Calendar:</strong> FullCalendar 6 (lazy CDN)</li>
+    </ul>
+  </div>
+</div>
+
+<h3>4.2 Struktur Folder Utama</h3>
+<div class="erd-box">app/
+├── Config/
+│   └── Routes.php              ← 275+ baris definisi route
+├── Controllers/
+│   ├── BaseApiController.php   ← Abstract: JWT, RBAC, success/fail helpers
+│   ├── Api/
+│   │   ├── AuthController.php
+│   │   ├── KegiatanController.php
+│   │   ├── Ltk/                ← 13 controller LTK
+│   │   └── Schedule/           ← 2 controller Schedule
+├── Filters/
+│   └── JwtAuthFilter.php       ← Token validation middleware
+├── Libraries/
+│   ├── JwtLibrary.php
+│   ├── EmailService.php
+│   ├── Ltk/                    ← WorkflowEngine, SlaCalculator, NotaDinasGenerator
+│   └── Schedule/               ← GoogleCalendarService
+├── Models/
+│   ├── UserModel.php
+│   ├── Ltk/                    ← 13 model LTK
+│   └── Schedule/               ← 6 model Schedule
+└── Views/
+    ├── layout/                 ← _head, _sidebar, _modal
+    └── auth/                   ← google_oauth_callback
+
+public/assets/
+├── css/app.css                 ← Global styles
+└── js/
+    ├── app.js                  ← Legacy monolith (pre-refactor)
+    └── modules/
+        ├── core.js             ← Bootstrap, routing, auth, notifications
+        ├── ltk.js              ← ~2500 baris UI LTK
+        ├── schedule.js         ← ~1800 baris UI Schedule
+        └── 15 modul lainnya
+</div>
+
+<div class="alert alert-warn">
+  <strong>⚠️ Catatan:</strong> File <code>app.js</code> dan module-based <code>modules/*.js</code> koeksistensi. <code>app.js</code> merupakan warisan monolitik sebelum refactoring. Risiko duplikasi definisi fungsi global perlu dikelola.
+</div>
+
+<hr class="section-divider" />
+
+
+<h2 id="database">5. Database &amp; ERD</h2>
+
+<h3>5.1 Ringkasan Tabel per Domain</h3>
+<table>
+  <tr><th>Domain</th><th>Tabel Utama</th><th>Jumlah</th><th>Catatan</th></tr>
+  <tr><td>Auth &amp; User</td><td>users, otp, app_settings</td><td>3</td><td>Soft-delete, multi-role</td></tr>
+  <tr><td>Tim</td><td>teams, team_members</td><td>2</td><td>FK ke users</td></tr>
+  <tr><td>Kegiatan</td><td>kegiatan, tasks, task_attachments, dokumen</td><td>4</td><td>Nested task, FK ke users</td></tr>
+  <tr><td>Anggaran</td><td>anggaran, rincian_anggaran, realisasi_anggaran, rencana_penarikan_dana, off_budget_sumber, ro</td><td>6</td><td>Semua FK ke kegiatan</td></tr>
+  <tr><td>SERASI</td><td>serasi_documents, serasi_folders, serasi_tags, serasi_metadata, unit_kerja</td><td>5</td><td>Relasi pivot tag-dokumen</td></tr>
+  <tr><td>LTK</td><td>ltk_permohonan, ltk_form_template, ltk_form_field, ltk_jawaban_field, ltk_asesmen, ltk_dokumen_output, ltk_nota_dinas_template, ltk_klien_profil, ltk_sla_config, ltk_hari_libur, ltk_aktivitas_log, ltk_notifikasi</td><td>12</td><td>Workflow 21 state</td></tr>
+  <tr><td>Schedule</td><td>schedules, schedule_categories, schedule_attendees, schedule_reminders, google_calendar_settings, schedule_sync_logs</td><td>6</td><td>FK ke users, ref_type polymorphic</td></tr>
+  <tr><td>Sistem</td><td>audit_log, notifikasi</td><td>2</td><td>Global cross-modul</td></tr>
+</table>
+
+<h3>5.2 ERD — Relasi Kunci</h3>
+<div class="erd-box">USERS (id, nama, email, role, status)
+  │
+  ├─ TEAMS ──── TEAM_MEMBERS
+  │
+  ├─ KEGIATAN (id, nama, team_id, pagu_anggaran)
+  │    ├─ TASKS ──── TASK_ATTACHMENTS
+  │    ├─ ANGGARAN ──── RINCIAN_ANGGARAN ──── REALISASI_ANGGARAN
+  │    ├─ RENCANA_PENARIKAN_DANA
+  │    ├─ OFF_BUDGET_SUMBER
+  │    └─ DOKUMEN
+  │
+  ├─ LTK_KLIEN_PROFIL (1:1 users klien)
+  │
+  ├─ LTK_PERMOHONAN (id, klien_user_id, pic_user_id, status[21], sla_hari_kerja)
+  │    ├─ LTK_JAWABAN_FIELD ──── LTK_FORM_FIELD ──── LTK_FORM_TEMPLATE
+  │    ├─ LTK_ASESMEN
+  │    ├─ LTK_DOKUMEN_OUTPUT (policy_brief, policy_paper, nota_dinas)
+  │    └─ LTK_AKTIVITAS_LOG
+  │
+  ├─ SCHEDULES (id, category_id, pic_user_id, ref_type, ref_id)
+  │    ├─ SCHEDULE_CATEGORIES
+  │    ├─ SCHEDULE_ATTENDEES ──── USERS
+  │    ├─ SCHEDULE_REMINDERS
+  │    └─ SCHEDULE_SYNC_LOGS
+  │
+  └─ GOOGLE_CALENDAR_SETTINGS (OAuth credentials, tokens)
+</div>
+
+<h3>5.3 Temuan Database</h3>
+<table>
+  <tr><th>Aspek</th><th>Kondisi</th><th>Rekomendasi</th></tr>
+  <tr><td>Normalisasi</td><td><span class="badge badge-green">Baik</span> — 3NF hampir di semua tabel</td><td>Pertahankan</td></tr>
+  <tr><td>Soft Delete</td><td><span class="badge badge-green">Konsisten</span> — deleted_at di semua tabel utama</td><td>Tambahkan index pada deleted_at</td></tr>
+  <tr><td>Index</td><td><span class="badge badge-yellow">Parsial</span> — FK sudah di-index, kolom filter belum semua</td><td>Tambahkan index pada: status (ltk_permohonan), tgl_mulai (schedules), role (users)</td></tr>
+  <tr><td>Foreign Key</td><td><span class="badge badge-green">Konsisten</span> — relasi via CI4 Query Builder</td><td>Pertimbangkan FK constraint di DB level untuk data integrity</td></tr>
+  <tr><td>Token Storage</td><td><span class="badge badge-yellow">Risiko</span> — access_token Google di-store plain di DB</td><td>Enkripsi kolom token di DB</td></tr>
+  <tr><td>Polymorphic</td><td><span class="badge badge-blue">Ada</span> — schedules.ref_type + ref_id</td><td>Dokumentasikan nilai ref_type yang valid</td></tr>
+  <tr><td>Timestamp</td><td><span class="badge badge-green">Konsisten</span> — created_at, updated_at di hampir semua tabel</td><td>Pastikan timezone konsisten (WIB/UTC)</td></tr>
+</table>
+
+<hr class="section-divider" />
+
+
+<h2 id="role">6. Analisis User Role</h2>
+<table>
+  <tr><th>Role</th><th>Akses Utama</th><th>Pembatasan</th><th>Bypass Admin?</th></tr>
+  <tr><td><span class="badge badge-red">admin</span></td><td>Full system access — semua endpoint</td><td>—</td><td>✅ Bypass semua role check</td></tr>
+  <tr><td><span class="badge badge-purple">direktur</span></td><td>Semua modul baca, laporan, kegiatan CRUD</td><td>Tidak bisa manage users</td><td>—</td></tr>
+  <tr><td><span class="badge badge-green">tu</span></td><td>LTK penuh, verifikasi klien, pengaturan LTK</td><td>Tidak bisa lihat anggaran detail</td><td>—</td></tr>
+  <tr><td><span class="badge badge-blue">ketua_tim</span></td><td>Kegiatan CRUD, tim, task, upload dok</td><td>Hanya kegiatan unit sendiri</td><td>—</td></tr>
+  <tr><td><span class="badge badge-gray">anggota_tim</span></td><td>Task update, upload attachment, lihat kegiatan</td><td>Read-only kegiatan</td><td>—</td></tr>
+  <tr><td><span class="badge badge-yellow">perencana_anggaran</span></td><td>Rincian anggaran, RPD, realisasi</td><td>Tidak bisa CRUD kegiatan</td><td>—</td></tr>
+  <tr><td><span class="badge badge-purple">pic_telaah</span></td><td>LTK tasks, asesmen, policy brief/paper</td><td>Hanya permohonan yang ditugaskan</td><td>—</td></tr>
+  <tr><td><span class="badge badge-gray">klien</span></td><td>Submit permohonan LTK, lihat timeline</td><td>Hanya data milik sendiri</td><td>—</td></tr>
+</table>
+
+<div class="alert alert-warn">
+  <strong>⚠️ Gap Role:</strong> (1) Tidak ada role "Kepala Direktorat" untuk approval formal. (2) Role <code>direktur</code> punya akses luas tapi tidak ada approval workflow. (3) Admin bypass total — tidak ada audit khusus untuk aksi admin.
+</div>
+
+<hr class="section-divider" />
+
+
+<h2 id="uiux">7. UI/UX Review</h2>
+<table>
+  <tr><th>Aspek</th><th>Penilaian</th><th>Temuan</th><th>Rekomendasi</th></tr>
+  <tr><td>Konsistensi Desain</td><td><span class="badge badge-green">Baik</span></td><td>Bootstrap + AdminLTE konsisten, card-based layout, color coding per role</td><td>Standarkan spacing dan warna aksen</td></tr>
+  <tr><td>Navigasi Sidebar</td><td><span class="badge badge-green">Baik</span></td><td>Role-based visibility, icon + label, collapse sidebar</td><td>Tambahkan breadcrumb untuk halaman dalam</td></tr>
+  <tr><td>Form UX</td><td><span class="badge badge-yellow">Cukup</span></td><td>Modal form sudah responsif, validasi client-side ada, tapi form panjang tidak ter-step</td><td>Multi-step wizard untuk form kompleks (LTK, Kegiatan)</td></tr>
+  <tr><td>Mobile Responsive</td><td><span class="badge badge-yellow">Parsial</span></td><td>Bootstrap grid digunakan, tapi SPA belum dioptimasi untuk layar kecil</td><td>Testing mobile viewport, perbaiki tabel responsif</td></tr>
+  <tr><td>Timeline LTK</td><td><span class="badge badge-green">Baik</span></td><td>Timeline vertikal realtime dengan timestamp, user, catatan</td><td>Tambahkan filter per aktivitas</td></tr>
+  <tr><td>Dashboard</td><td><span class="badge badge-yellow">Cukup</span></td><td>Widget angka sudah ada, belum ada grafik/chart visualisasi</td><td>Tambahkan chart trend bulanan (Chart.js/ECharts)</td></tr>
+  <tr><td>Feedback Pengguna</td><td><span class="badge badge-green">Baik</span></td><td>Toast notification, loading spinner, error message</td><td>Tambahkan skeleton loading untuk data besar</td></tr>
+  <tr><td>Aksesibilitas</td><td><span class="badge badge-red">Kurang</span></td><td>Tidak ada ARIA label, kontras warna belum diuji WCAG</td><td>Audit aksesibilitas, tambahkan aria-label pada form</td></tr>
+  <tr><td>Overflow Modal</td><td><span class="badge badge-yellow">Perlu Perbaikan</span></td><td>Scrollbar modal memakan lebar konten, teks bisa terpotong di kanan</td><td>overflow-x:hidden + overflow-y:scroll pada modal-body (sudah sebagian diperbaiki)</td></tr>
+</table>
+
+<hr class="section-divider" />
+
+
+<h2 id="security">8. Security Review</h2>
+
+<h3>8.1 Temuan Keamanan</h3>
+<table>
+  <tr><th>Kategori</th><th>Status</th><th>Detail</th><th>Rekomendasi</th></tr>
+  <tr><td>SQL Injection</td><td><span class="badge badge-green">Mitigasi</span></td><td>CI4 Query Builder menggunakan parameter binding</td><td>Hindari raw query string, audit semua query($sql)</td></tr>
+  <tr><td>XSS</td><td><span class="badge badge-yellow">Risiko Medium</span></td><td>esc() helper digunakan di frontend. Tapi innerHTML digunakan secara masif di JS modules</td><td>Gunakan textContent untuk data user, audit innerHTML</td></tr>
+  <tr><td>CSRF</td><td><span class="badge badge-green">API Tidak Rentan</span></td><td>API stateless JWT tidak memerlukan CSRF token</td><td>Pastikan SameSite cookie jika pindah ke cookie-based auth</td></tr>
+  <tr><td>JWT Security</td><td><span class="badge badge-yellow">Perhatian</span></td><td>Custom JWT implementation, bukan library standar (php-jwt). Token di localStorage rentan XSS</td><td>Audit implementasi JwtLibrary, pertimbangkan HttpOnly cookie</td></tr>
+  <tr><td>Broken Auth</td><td><span class="badge badge-green">Mitigasi</span></td><td>JwtAuthFilter di semua route, requireRole() di setiap endpoint</td><td>Tambahkan rate limiting pada login endpoint</td></tr>
+  <tr><td>Broken Authorization</td><td><span class="badge badge-yellow">Perhatian</span></td><td>Admin bypass total semua role check — potensi privilege escalation</td><td>Tambahkan audit log khusus untuk aksi admin sensitif</td></tr>
+  <tr><td>File Upload</td><td><span class="badge badge-yellow">Parsial</span></td><td>Tidak terlihat validasi MIME type eksplisit pada upload dokumen</td><td>Validasi MIME + ekstensi + max size, rename file, simpan di luar webroot</td></tr>
+  <tr><td>Sensitive Data</td><td><span class="badge badge-yellow">Perhatian</span></td><td>Google client_secret tersimpan plain text di DB. access_token Google juga plain</td><td>Enkripsi kolom sensitif di DB (AES-256)</td></tr>
+  <tr><td>Password</td><td><span class="badge badge-green">Aman</span></td><td>Bcrypt hashing, must_change_password flag tersedia</td><td>Enforced password policy (min length, kompleksitas)</td></tr>
+  <tr><td>OTP</td><td><span class="badge badge-green">Aman</span></td><td>6-digit, expiry tersimpan, purpose-tagged</td><td>Tambahkan rate limit OTP request per email</td></tr>
+</table>
+
+<div class="alert alert-danger">
+  <strong>🔴 Prioritas Tinggi:</strong> Token JWT disimpan di <code>localStorage</code>. Jika ada XSS di salah satu halaman, seluruh sesi bisa diambil alih. Pertimbangkan migrasi ke HttpOnly cookie untuk token penyimpanan, atau setidaknya implementasi Content Security Policy (CSP) yang ketat.
+</div>
+
+<hr class="section-divider" />
+
+
+<h2 id="teknis">9. Technical Debt &amp; Code Review</h2>
+
+<h3>9.1 Kelebihan Teknis</h3>
+<ul>
+  <li>Arsitektur RESTful konsisten — semua operasi via JSON API</li>
+  <li><code>BaseApiController</code> sangat efektif mengurangi duplikasi auth + response format</li>
+  <li>Migration system terstruktur (54 file, naming convention konsisten)</li>
+  <li>Soft delete konsisten di seluruh tabel utama</li>
+  <li>Audit log terintegrasi di controller via <code>auditLog()</code></li>
+  <li>LTK WorkflowEngine sebagai state machine — desain yang tepat</li>
+  <li>GoogleCalendarService pure cURL tanpa SDK eksternal — ringan dan terkontrol</li>
+</ul>
+
+<h3>9.2 Technical Debt</h3>
+<table>
+  <tr><th>Item</th><th>Severity</th><th>Deskripsi</th></tr>
+  <tr class="priority-high"><td>Tidak ada unit test</td><td><span class="badge badge-red">Tinggi</span></td><td>Tidak ada test coverage. Setiap refactor berisiko regresi tanpa terdeteksi</td></tr>
+  <tr class="priority-high"><td>app.js monolith</td><td><span class="badge badge-red">Tinggi</span></td><td>app.js (~2500+ baris) koeksistensi dengan modules/. Risiko konflik fungsi global</td></tr>
+  <tr class="priority-high"><td>ltk.js ukuran besar</td><td><span class="badge badge-yellow">Medium</span></td><td>ltk.js ~2500 baris dalam satu file — sulit di-maintain, sulit debug</td></tr>
+  <tr class="priority-med"><td>Tidak ada caching</td><td><span class="badge badge-yellow">Medium</span></td><td>Tidak ada Redis/memcache. Setiap request DB query fresh. Bottleneck pada data besar</td></tr>
+  <tr class="priority-med"><td>Sinkronisasi Google Calendar sinkronus</td><td><span class="badge badge-yellow">Medium</span></td><td>Sync dilakukan dalam request HTTP yang sama. Jika Google lambat, user menunggu</td></tr>
+  <tr class="priority-med"><td>Tidak ada pagination di beberapa endpoint</td><td><span class="badge badge-yellow">Medium</span></td><td>Beberapa endpoint list tidak mem-paginate — risiko timeout data besar</td></tr>
+  <tr class="priority-low"><td>Hardcoded config</td><td><span class="badge badge-gray">Rendah</span></td><td>Beberapa nilai (port, URL) masih hardcoded di beberapa tempat</td></tr>
+  <tr class="priority-low"><td>Error handling Google API</td><td><span class="badge badge-gray">Rendah</span></td><td>Beberapa try-catch hanya log warning — error silent pada operasi penting</td></tr>
+</table>
+
+<hr class="section-divider" />
+
+
+<h2 id="gap">10. Gap Analysis</h2>
+<table>
+  <tr><th>Kebutuhan</th><th>Status</th><th>Gap</th><th>Prioritas</th></tr>
+  <tr><td>Dashboard eksekutif dengan grafik</td><td>Parsial (widget angka saja)</td><td>Tidak ada chart trend, perbandingan periode</td><td><span class="badge badge-red">Tinggi</span></td></tr>
+  <tr><td>Notifikasi realtime (WebSocket)</td><td>Parsial (polling manual)</td><td>Tidak ada push notification realtime</td><td><span class="badge badge-yellow">Medium</span></td></tr>
+  <tr><td>Approval workflow Kegiatan</td><td>Tidak ada</td><td>Tidak ada mekanisme approval/review oleh Direktur</td><td><span class="badge badge-red">Tinggi</span></td></tr>
+  <tr><td>Integrasi SRIKANDI langsung</td><td>Manual (user input nomor ND)</td><td>Tidak ada API SRIKANDI — proses masih manual</td><td><span class="badge badge-yellow">Medium</span></td></tr>
+  <tr><td>Mobile app / PWA</td><td>Tidak ada</td><td>Akses mobile terbatas, tidak ada offline mode</td><td><span class="badge badge-yellow">Medium</span></td></tr>
+  <tr><td>E-signature dokumen</td><td>Tidak ada</td><td>Nota Dinas tidak ada tanda tangan digital</td><td><span class="badge badge-yellow">Medium</span></td></tr>
+  <tr><td>Unit test &amp; CI/CD</td><td>Tidak ada</td><td>Tidak ada otomasi testing dan deployment</td><td><span class="badge badge-red">Tinggi</span></td></tr>
+  <tr><td>Rate limiting &amp; throttling</td><td>Tidak ada</td><td>API tidak terlindungi dari brute force / abuse</td><td><span class="badge badge-red">Tinggi</span></td></tr>
+  <tr><td>Backup &amp; disaster recovery</td><td>Tidak terlihat di aplikasi</td><td>Tidak ada fitur backup dari UI, tergantung infrastruktur</td><td><span class="badge badge-yellow">Medium</span></td></tr>
+  <tr><td>Laporan ekspor Excel/PDF</td><td>Parsial (CSV saja)</td><td>Laporan LTK bisa ekspor CSV, belum ada Excel/PDF proper</td><td><span class="badge badge-yellow">Medium</span></td></tr>
+  <tr><td>Manajemen hak akses granular</td><td>Parsial (role-based)</td><td>Tidak ada permission per fitur (ABAC), hanya RBAC kasar</td><td><span class="badge badge-gray">Rendah</span></td></tr>
+  <tr><td>SLA eskalasi otomatis</td><td>Parsial (monitoring saja)</td><td>Tidak ada eskalasi otomatis saat SLA breach ke supervisor</td><td><span class="badge badge-yellow">Medium</span></td></tr>
+</table>
+
+<hr class="section-divider" />
+
+
+<h2 id="risk">11. Risk Analysis</h2>
+<table class="risk-table">
+  <tr><th>Risiko</th><th>Likelihood</th><th>Impact</th><th>Mitigasi</th></tr>
+  <tr><td>Data loss tanpa backup rutin</td><td><span class="badge badge-yellow">Medium</span></td><td><span class="badge badge-red">Tinggi</span></td><td>Setup automated DB backup harian, uji restore</td></tr>
+  <tr><td>XSS via innerHTML di JS modules</td><td><span class="badge badge-yellow">Medium</span></td><td><span class="badge badge-red">Tinggi</span></td><td>Audit innerHTML, implementasi CSP header</td></tr>
+  <tr><td>Token theft via XSS (localStorage)</td><td><span class="badge badge-yellow">Medium</span></td><td><span class="badge badge-red">Tinggi</span></td><td>Migrasi ke HttpOnly cookie atau implementasi CSP</td></tr>
+  <tr><td>Google OAuth token expired tanpa refresh</td><td><span class="badge badge-green">Rendah</span></td><td><span class="badge badge-yellow">Medium</span></td><td>Auto-refresh sudah ada, tambahkan fallback UI yang jelas</td></tr>
+  <tr><td>Regresi saat penambahan fitur (no tests)</td><td><span class="badge badge-red">Tinggi</span></td><td><span class="badge badge-yellow">Medium</span></td><td>Implementasi PHPUnit + Selenium/Playwright E2E test</td></tr>
+  <tr><td>app.js konflik dengan modules/*.js</td><td><span class="badge badge-yellow">Medium</span></td><td><span class="badge badge-yellow">Medium</span></td><td>Audit scope global, plan migrasi bertahap</td></tr>
+  <tr><td>Performa degradasi data besar</td><td><span class="badge badge-green">Rendah</span></td><td><span class="badge badge-yellow">Medium</span></td><td>Tambahkan index DB, implementasi pagination wajib</td></tr>
+  <tr><td>Dependency Google Calendar API perubahan</td><td><span class="badge badge-green">Rendah</span></td><td><span class="badge badge-yellow">Medium</span></td><td>Abstract service layer sudah ada — update di satu tempat</td></tr>
+</table>
+
+<hr class="section-divider" />
+
+
+<h2 id="rekomendasi">12. Rekomendasi &amp; Development Roadmap</h2>
+
+<h3>12.1 Modul Baru yang Direkomendasikan</h3>
+<table>
+  <tr><th>Modul</th><th>Deskripsi</th><th>Prioritas</th></tr>
+  <tr><td>📊 Dashboard Eksekutif</td><td>Chart trend kegiatan, serapan anggaran, kinerja LTK — dengan filter periode</td><td><span class="badge badge-red">Tinggi</span></td></tr>
+  <tr><td>✅ Approval Workflow</td><td>Mekanisme pengajuan → review → persetujuan Direktur untuk kegiatan dan anggaran besar</td><td><span class="badge badge-red">Tinggi</span></td></tr>
+  <tr><td>🔔 Notifikasi Push</td><td>WebSocket atau SSE untuk notifikasi realtime (deadline SLA, tugas baru)</td><td><span class="badge badge-yellow">Medium</span></td></tr>
+  <tr><td>📄 Ekspor Laporan Excel/PDF</td><td>Generate laporan dalam format Excel (PhpSpreadsheet) dan PDF (TCPDF/DomPDF)</td><td><span class="badge badge-yellow">Medium</span></td></tr>
+  <tr><td>✍️ E-Signature Nota Dinas</td><td>Integrasi tanda tangan digital pada Nota Dinas (BSrE BSSN atau QR-code based)</td><td><span class="badge badge-yellow">Medium</span></td></tr>
+  <tr><td>📱 PWA / Mobile Optimization</td><td>Progressive Web App manifest, service worker, offline cache untuk akses mobile</td><td><span class="badge badge-yellow">Medium</span></td></tr>
+  <tr><td>🔗 Integrasi SRIKANDI API</td><td>Otomatisasi pengiriman dan penerimaan surat via API SRIKANDI</td><td><span class="badge badge-gray">Rendah</span></td></tr>
+  <tr><td>📦 Backup &amp; Restore UI</td><td>Admin dapat trigger backup DB dari UI, download, restore</td><td><span class="badge badge-gray">Rendah</span></td></tr>
+</table>
+
+<h3>12.2 Roadmap Pengembangan</h3>
+<div class="roadmap">
+  <div class="roadmap-col rc1">
+    <h4>🔴 Quick Win (0–1 Bulan)</h4>
+    <ul>
+      <li>Rate limiting login</li>
+      <li>Index DB kritis (status, tgl)</li>
+      <li>CSP header konfigurasi</li>
+      <li>Enkripsi token Google di DB</li>
+      <li>Pagination wajib semua endpoint list</li>
+      <li>Audit innerHTML JS modules</li>
+      <li>Fix overflow modal CSS</li>
+    </ul>
+  </div>
+  <div class="roadmap-col rc2">
+    <h4>🟡 Short Term (1–3 Bulan)</h4>
+    <ul>
+      <li>Dashboard eksekutif + chart</li>
+      <li>Ekspor Excel/PDF laporan</li>
+      <li>PHPUnit test core workflow</li>
+      <li>SLA eskalasi otomatis email</li>
+      <li>Refactor app.js → modules</li>
+      <li>Async Google Calendar sync</li>
+      <li>Pemecahan ltk.js per sub-modul</li>
+    </ul>
+  </div>
+  <div class="roadmap-col rc3">
+    <h4>🔵 Mid Term (3–6 Bulan)</h4>
+    <ul>
+      <li>Approval workflow kegiatan</li>
+      <li>Notifikasi realtime (SSE)</li>
+      <li>E-Signature Nota Dinas</li>
+      <li>PWA manifest + offline</li>
+      <li>ABAC permission granular</li>
+      <li>CI/CD pipeline setup</li>
+      <li>Load testing &amp; profiling</li>
+    </ul>
+  </div>
+  <div class="roadmap-col rc4">
+    <h4>🟢 Long Term (6–12 Bulan)</h4>
+    <ul>
+      <li>Integrasi SRIKANDI API</li>
+      <li>Redis caching layer</li>
+      <li>Queue system (async jobs)</li>
+      <li>Microservice LTK</li>
+      <li>API versioning v2</li>
+      <li>Multi-instansi / multi-unit</li>
+      <li>AI-assisted telaah kebijakan</li>
+    </ul>
+  </div>
+</div>
+
+<hr class="section-divider" />
+
+
+<h2 id="kesimpulan">13. Kesimpulan &amp; Prioritas Pengembangan</h2>
+
+<h3>13.1 Kekuatan Utama Sistem</h3>
+<ul>
+  <li><strong>Arsitektur solid</strong> — RESTful API + SPA yang skalabel dan maintainable</li>
+  <li><strong>Modul LTK lengkap</strong> — workflow 21 status, SLA monitoring, form dinamis, dokumen otomatis</li>
+  <li><strong>Integrasi Google Calendar</strong> — OAuth2, sinkronisasi dua arah, multi-kalender pull</li>
+  <li><strong>Audit trail menyeluruh</strong> — semua aksi kritis tercatat dengan detail</li>
+  <li><strong>54 migrasi terstruktur</strong> — database versioning yang matang dan reproducible</li>
+  <li><strong>RBAC 8 role</strong> — kontrol akses yang granular dan konsisten</li>
+</ul>
+
+<h3>13.2 Area Kritis yang Harus Segera Ditangani</h3>
+<ol>
+  <li><span class="badge badge-red">KRITIS</span> Implementasi unit &amp; integration testing — tanpa ini semua perubahan berisiko tinggi</li>
+  <li><span class="badge badge-red">KRITIS</span> Hardening keamanan JWT (migrasi ke HttpOnly cookie atau CSP + token rotation)</li>
+  <li><span class="badge badge-red">KRITIS</span> Rate limiting pada endpoint login dan OTP</li>
+  <li><span class="badge badge-yellow">PENTING</span> Dashboard eksekutif dengan visualisasi data</li>
+  <li><span class="badge badge-yellow">PENTING</span> Ekspor laporan Excel/PDF formal</li>
+  <li><span class="badge badge-yellow">PENTING</span> SLA eskalasi otomatis saat breach</li>
+</ol>
+
+<h3>13.3 Penilaian Akhir</h3>
+<div class="two-col">
+  <div class="card">
+    <h4>Skor Kematangan Sistem</h4>
+    <table>
+      <tr><td>Arsitektur</td><td><strong>8.5/10</strong></td></tr>
+      <tr><td>Kelengkapan Fitur</td><td><strong>8.0/10</strong></td></tr>
+      <tr><td>Keamanan</td><td><strong>6.5/10</strong></td></tr>
+      <tr><td>Kualitas Kode</td><td><strong>7.5/10</strong></td></tr>
+      <tr><td>UI/UX</td><td><strong>7.0/10</strong></td></tr>
+      <tr><td>Skalabilitas</td><td><strong>7.0/10</strong></td></tr>
+      <tr><td><strong>Rata-Rata</strong></td><td><strong>7.4/10</strong></td></tr>
+    </table>
+  </div>
+  <div class="card">
+    <h4>Status Kesiapan</h4>
+    <p><span class="badge badge-green">Production-Ready</span> untuk operasional harian</p>
+    <p><span class="badge badge-yellow">Perlu Hardening</span> sebelum expose ke internet publik</p>
+    <p><span class="badge badge-blue">Potensial Tinggi</span> untuk dikembangkan menjadi platform ANRI yang lebih luas</p>
+    <br />
+    <p style="font-size:12px;color:#6b7280">Sistem ini merupakan salah satu implementasi internal government yang paling matang secara arsitektur, dengan kompleksitas LTK workflow yang setara sistem enterprise komersial.</p>
+  </div>
+</div>
+
+<div class="footer">
+  MKA System — System Assessment Report · Direktorat Sistem Kearsipan ANRI · September 2026<br />
+  <span style="color:#d1d5db">Made with IBM Bob</span>
+</div>
+
+</div>
+</body>
+</html>

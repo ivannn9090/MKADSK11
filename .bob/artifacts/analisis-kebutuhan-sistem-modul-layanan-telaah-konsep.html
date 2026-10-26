@@ -1,0 +1,1038 @@
+
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Analisis Kebutuhan Sistem — Layanan Telaah Konsep</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, "Segoe UI", system-ui, sans-serif; font-size: 14px; line-height: 1.6; color: #1f2328; background: #fff; }
+  .container { max-width: 760px; margin: 0 auto; padding: 40px 24px; }
+  h1 { font-size: 22px; font-weight: 700; color: #1f2328; margin-bottom: 4px; }
+  h2 { font-size: 17px; font-weight: 700; color: #1f2328; margin: 36px 0 10px; padding-bottom: 6px; border-bottom: 2px solid #3b82d4; }
+  h3 { font-size: 14px; font-weight: 700; color: #1f2328; margin: 20px 0 6px; }
+  h4 { font-size: 13px; font-weight: 700; color: #3b82d4; margin: 14px 0 4px; }
+  p { margin-bottom: 8px; color: #1f2328; }
+  .subtitle { font-size: 13px; color: #57606a; margin-bottom: 6px; }
+  .meta { font-size: 12px; color: #57606a; margin-bottom: 28px; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; }
+  .badge-blue { background: #dbeafe; color: #1d4ed8; }
+  .badge-green { background: #dcfce7; color: #15803d; }
+  .badge-orange { background: #fff7ed; color: #c2410c; }
+  .badge-purple { background: #f3e8ff; color: #7c3aed; }
+  .badge-gray { background: #f1f5f9; color: #475569; }
+  .section-box { background: #f7f8fa; border: 1px solid #e5e7eb; border-radius: 6px; padding: 16px 18px; margin-bottom: 14px; }
+  table { width: 100%; border-collapse: collapse; margin: 10px 0 18px; font-size: 13px; }
+  th { background: #f7f8fa; border: 1px solid #e5e7eb; padding: 7px 10px; text-align: left; font-weight: 700; color: #1f2328; }
+  td { border: 1px solid #e5e7eb; padding: 7px 10px; vertical-align: top; }
+  tr:hover td { background: #fafbfc; }
+  code { font-family: "SFMono-Regular", Consolas, monospace; font-size: 12px; background: #f1f5f9; padding: 1px 5px; border-radius: 3px; color: #0f172a; }
+  pre { background: #0f172a; color: #e2e8f0; padding: 14px 16px; border-radius: 6px; font-family: "SFMono-Regular", Consolas, monospace; font-size: 11.5px; line-height: 1.7; overflow-x: auto; margin: 10px 0 18px; white-space: pre-wrap; }
+  ul, ol { padding-left: 20px; margin-bottom: 10px; }
+  li { margin-bottom: 3px; font-size: 13px; }
+  .flow-box { border-left: 3px solid #3b82d4; padding: 10px 14px; background: #eff6ff; border-radius: 0 6px 6px 0; margin: 8px 0; font-size: 13px; }
+  .flow-step { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 6px; }
+  .step-num { background: #3b82d4; color: #fff; border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+  .card { background: #f7f8fa; border: 1px solid #e5e7eb; border-radius: 6px; padding: 14px 16px; }
+  .card h4 { margin-top: 0; }
+  .sla-box { display: inline-block; background: #fef3c7; border: 1px solid #fde68a; border-radius: 6px; padding: 6px 14px; font-weight: 700; font-size: 13px; color: #92400e; margin: 6px 0; }
+  .status-flow { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0; align-items: center; }
+  .status-chip { background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 14px; padding: 3px 10px; font-size: 11.5px; font-weight: 600; color: #334155; }
+  .arrow { color: #94a3b8; font-size: 12px; }
+  .branch-label { font-weight: 700; color: #7c3aed; font-size: 12px; }
+  .risk-row td:first-child { font-weight: 600; }
+  .sprint-card { border: 1px solid #e5e7eb; border-radius: 6px; margin-bottom: 10px; overflow: hidden; }
+  .sprint-header { background: #3b82d4; color: #fff; padding: 8px 14px; font-weight: 700; font-size: 13px; }
+  .sprint-body { padding: 10px 14px; font-size: 13px; }
+  .sprint-body li { margin-bottom: 4px; }
+  .toc a { color: #3b82d4; text-decoration: none; font-size: 13px; }
+  .toc a:hover { text-decoration: underline; }
+  .toc li { margin-bottom: 4px; }
+  .divider { border: none; border-top: 1px solid #e5e7eb; margin: 32px 0; }
+  footer { text-align: center; font-size: 12px; color: #57606a; border-top: 1px solid #e5e7eb; margin-top: 40px; padding-top: 16px; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  
+  <h1>Analisis Kebutuhan Sistem</h1>
+  <div class="subtitle">Modul Layanan Telaah Konsep — MKA System</div>
+  <div class="meta">
+    Organisasi: Direktorat Sistem Kearsipan — ANRI  | 
+    Framework: CodeIgniter 4  | 
+    Versi Dokumen: 1.0  | 
+    Status: <span class="badge badge-orange">Draft</span>
+  </div>
+
+  
+  <div class="section-box">
+    <h3 style="margin-top:0">Daftar Isi</h3>
+    <ol class="toc">
+      <li><a href="#s1">Analisis Kebutuhan Sistem</a></li>
+      <li><a href="#s2">Use Case Diagram</a></li>
+      <li><a href="#s3">Activity &amp; BPMN Diagram</a></li>
+      <li><a href="#s4">User Role Matrix</a></li>
+      <li><a href="#s5">ERD &amp; Database Schema MySQL</a></li>
+      <li><a href="#s6">Struktur Folder CodeIgniter 4</a></li>
+      <li><a href="#s7">API Endpoint Design</a></li>
+      <li><a href="#s8">SLA Monitoring Design</a></li>
+      <li><a href="#s9">Notification Flow</a></li>
+      <li><a href="#s10">Wireframe &amp; Rancangan UI/UX</a></li>
+      <li><a href="#s11">Sequence Diagram</a></li>
+      <li><a href="#s12">Roadmap Pengembangan</a></li>
+      <li><a href="#s13">Backlog Sprint Agile</a></li>
+      <li><a href="#s14">Risiko Implementasi</a></li>
+      <li><a href="#s15">Rekomendasi Arsitektur &amp; Best Practice</a></li>
+    </ol>
+  </div>
+
+  <hr class="divider" />
+
+  
+  <h2 id="s1">1. Analisis Kebutuhan Sistem</h2>
+
+  <h3>1.1 Latar Belakang</h3>
+  <p>MKA System saat ini mengelola kegiatan On Budget dan Off Budget di lingkungan ANRI. Modul <strong>Layanan Telaah Konsep</strong> dikembangkan untuk mendigitalisasi alur layanan telaah kajian dan analisis kebijakan yang diajukan oleh unit kerja/direktorat kepada Direktorat Sistem Kearsipan, mencakup seluruh siklus mulai dari pengajuan hingga penyerahan output akhir.</p>
+
+  <h3>1.2 Kebutuhan Fungsional</h3>
+  <table>
+    <tr><th>Kode</th><th>Kebutuhan</th><th>Prioritas</th></tr>
+    <tr><td>FR-01</td><td>Registrasi dan verifikasi akun Klien oleh TU</td><td><span class="badge badge-blue">Tinggi</span></td></tr>
+    <tr><td>FR-02</td><td>Formulir pengajuan telaah yang dinamis dan dapat dikonfigurasi TU</td><td><span class="badge badge-blue">Tinggi</span></td></tr>
+    <tr><td>FR-03</td><td>Generate Nota Dinas otomatis (DOCX &amp; PDF)</td><td><span class="badge badge-blue">Tinggi</span></td></tr>
+    <tr><td>FR-04</td><td>Verifikasi administrasi oleh TU dan input nomor/tanggal Nota Dinas</td><td><span class="badge badge-blue">Tinggi</span></td></tr>
+    <tr><td>FR-05</td><td>Manajemen antrian (Regular &amp; Prioritas)</td><td><span class="badge badge-blue">Tinggi</span></td></tr>
+    <tr><td>FR-06</td><td>Penugasan PIC oleh TU</td><td><span class="badge badge-blue">Tinggi</span></td></tr>
+    <tr><td>FR-07</td><td>Asesmen awal oleh PIC dan penentuan skenario (A/B)</td><td><span class="badge badge-blue">Tinggi</span></td></tr>
+    <tr><td>FR-08</td><td>Alur Skenario A: Policy Brief + Nota Dinas Tanggapan (SLA 6 HK)</td><td><span class="badge badge-blue">Tinggi</span></td></tr>
+    <tr><td>FR-09</td><td>Alur Skenario B: Policy Brief + Policy Paper + 2 Nota Dinas (SLA 28 HK)</td><td><span class="badge badge-blue">Tinggi</span></td></tr>
+    <tr><td>FR-10</td><td>Monitoring SLA realtime (countdown, peringatan, pelanggaran)</td><td><span class="badge badge-blue">Tinggi</span></td></tr>
+    <tr><td>FR-11</td><td>Timeline tracking realtime untuk Klien</td><td><span class="badge badge-blue">Tinggi</span></td></tr>
+    <tr><td>FR-12</td><td>Dashboard TU, PIC, dan Klien</td><td><span class="badge badge-blue">Tinggi</span></td></tr>
+    <tr><td>FR-13</td><td>Manajemen template dokumen oleh Administrator</td><td><span class="badge badge-green">Sedang</span></td></tr>
+    <tr><td>FR-14</td><td>10 jenis laporan kinerja layanan telaah</td><td><span class="badge badge-green">Sedang</span></td></tr>
+    <tr><td>FR-15</td><td>Notifikasi email/in-app untuk setiap perubahan status</td><td><span class="badge badge-green">Sedang</span></td></tr>
+    <tr><td>FR-16</td><td>Upload dokumen pendukung (PDF, file)</td><td><span class="badge badge-green">Sedang</span></td></tr>
+    <tr><td>FR-17</td><td>Catatan proses pada setiap aktivitas workflow</td><td><span class="badge badge-green">Sedang</span></td></tr>
+    <tr><td>FR-18</td><td>Audit log seluruh aksi pengguna</td><td><span class="badge badge-gray">Rendah</span></td></tr>
+  </table>
+
+  <h3>1.3 Kebutuhan Non-Fungsional</h3>
+  <table>
+    <tr><th>Kode</th><th>Kebutuhan</th><th>Target</th></tr>
+    <tr><td>NFR-01</td><td>Performa halaman</td><td>&lt; 2 detik</td></tr>
+    <tr><td>NFR-02</td><td>Keamanan autentikasi</td><td>CI Shield + RBAC</td></tr>
+    <tr><td>NFR-03</td><td>Akurasi perhitungan SLA hari kerja</td><td>100% (exclude weekend + libur nasional)</td></tr>
+    <tr><td>NFR-04</td><td>Format dokumen output</td><td>DOCX via PhpWord, PDF via mPDF/TCPDF</td></tr>
+    <tr><td>NFR-05</td><td>Skalabilitas</td><td>Mendukung ≥ 100 permohonan aktif</td></tr>
+    <tr><td>NFR-06</td><td>Audit trail</td><td>Seluruh aksi tercatat dengan timestamp &amp; user</td></tr>
+    <tr><td>NFR-07</td><td>Responsif</td><td>Bootstrap 5, mobile-friendly</td></tr>
+  </table>
+
+  <hr class="divider" />
+
+  
+  <h2 id="s2">2. Use Case Diagram</h2>
+
+  <h3>2.1 Aktor dan Use Case Utama</h3>
+  <table>
+    <tr><th>Aktor</th><th>Use Case</th></tr>
+    <tr>
+      <td><strong>Super Admin</strong></td>
+      <td>Kelola pengguna, kelola template dokumen, kelola form dinamis global, lihat semua laporan, konfigurasi hari libur/SLA, audit log</td>
+    </tr>
+    <tr>
+      <td><strong>Tata Usaha (TU)</strong></td>
+      <td>Verifikasi akun Klien, kelola form dinamis, verifikasi administrasi permohonan, input nomor/tanggal Nota Dinas, kelola antrian, tugaskan PIC, lihat dashboard TU, cetak laporan</td>
+    </tr>
+    <tr>
+      <td><strong>PIC Telaah</strong></td>
+      <td>Terima/tolak penugasan, lakukan asesmen awal, tentukan skenario, susun Policy Brief, susun Nota Dinas, susun Policy Paper, update status proses, upload dokumen output, lihat SLA</td>
+    </tr>
+    <tr>
+      <td><strong>Klien</strong></td>
+      <td>Registrasi akun, isi formulir pengajuan, unduh Nota Dinas, pantau timeline realtime, lihat dashboard Klien, unduh output akhir</td>
+    </tr>
+  </table>
+
+  <h3>2.2 Use Case Utama (Narasi Singkat)</h3>
+  <div class="section-box">
+    <h4>UC-01: Pengajuan Permohonan Telaah</h4>
+    <p><strong>Aktor:</strong> Klien  |  <strong>Pre-kondisi:</strong> Akun terverifikasi, login sebagai Klien</p>
+    <p><strong>Alur Normal:</strong> Klien membuka formulir dinamis → isi semua field wajib → submit → sistem generate Nota Dinas otomatis → status: <em>Menunggu Pengiriman ke SRIKANDI</em></p>
+  </div>
+  <div class="section-box">
+    <h4>UC-02: Verifikasi Administrasi</h4>
+    <p><strong>Aktor:</strong> TU  |  <strong>Pre-kondisi:</strong> Surat resmi masuk via SRIKANDI</p>
+    <p><strong>Alur Normal:</strong> TU buka daftar permohonan → pilih permohonan → input nomor &amp; tanggal Nota Dinas → verifikasi → status: <em>Terverifikasi → Masuk Antrian</em></p>
+  </div>
+  <div class="section-box">
+    <h4>UC-03: Penugasan PIC</h4>
+    <p><strong>Aktor:</strong> TU  |  <strong>Pre-kondisi:</strong> Permohonan terverifikasi, masuk antrian</p>
+    <p><strong>Alur Normal:</strong> TU pilih antrian → tentukan jenis (Regular/Prioritas) → pilih PIC → tugaskan → sistem kirim notifikasi ke PIC → status: <em>Ditugaskan PIC</em></p>
+  </div>
+  <div class="section-box">
+    <h4>UC-04: Proses Telaah (Skenario A &amp; B)</h4>
+    <p><strong>Aktor:</strong> PIC  |  <strong>Pre-kondisi:</strong> PIC menerima penugasan, SLA mulai berjalan</p>
+    <p><strong>Alur Normal:</strong> PIC terima tugas → asesmen awal → pilih skenario → susun dokumen → upload output → update status → selesai</p>
+  </div>
+
+  <hr class="divider" />
+
+  
+  <h2 id="s3">3. Activity Diagram &amp; BPMN Proses Bisnis</h2>
+
+  <h3>3.1 Alur Bisnis Lengkap</h3>
+  <div class="flow-box">
+    <div class="flow-step"><div class="step-num">1</div><div>Klien registrasi akun → TU verifikasi akun</div></div>
+    <div class="flow-step"><div class="step-num">2</div><div>Klien login → isi formulir pengajuan telaah (form dinamis)</div></div>
+    <div class="flow-step"><div class="step-num">3</div><div>Sistem generate Nota Dinas Pengajuan (DOCX/PDF)</div></div>
+    <div class="flow-step"><div class="step-num">4</div><div>Klien unduh Nota Dinas → kirim via SRIKANDI (eksternal)</div></div>
+    <div class="flow-step"><div class="step-num">5</div><div>TU terima surat SRIKANDI → verifikasi administrasi → input nomor &amp; tanggal ND</div></div>
+    <div class="flow-step"><div class="step-num">6</div><div>Permohonan masuk antrian (Regular/Prioritas)</div></div>
+    <div class="flow-step"><div class="step-num">7</div><div>TU tugaskan PIC → PIC terima penugasan → SLA mulai dihitung</div></div>
+    <div class="flow-step"><div class="step-num">8</div><div>PIC asesmen awal → pilih Skenario A atau B</div></div>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <h4>🔵 Skenario A — Tidak Perlu Tindak Lanjut</h4>
+      <p><span class="sla-box">SLA: 6 Hari Kerja</span></p>
+      <ol>
+        <li>PIC susun Policy Brief</li>
+        <li>PIC susun Nota Dinas Tanggapan</li>
+        <li>Upload output → Status: <strong>Selesai</strong></li>
+        <li>Status: <strong>Ditutup</strong></li>
+      </ol>
+      <p><strong>Output:</strong> Policy Brief + Nota Dinas Tanggapan</p>
+    </div>
+    <div class="card">
+      <h4>🟣 Skenario B — Perlu Tindak Lanjut</h4>
+      <p><span class="sla-box">SLA: 28 Hari Kerja</span></p>
+      <p><strong>Tahap 1:</strong></p>
+      <ol>
+        <li>Susun Policy Brief awal</li>
+        <li>Susun Nota Dinas Permintaan Penyesuaian</li>
+      </ol>
+      <p><strong>Tahap 2:</strong></p>
+      <ol>
+        <li>Kajian lanjutan mendalam</li>
+        <li>Susun Policy Paper</li>
+        <li>Susun Nota Dinas Hasil Telaah Akhir</li>
+        <li>Upload output → Status: <strong>Selesai → Ditutup</strong></li>
+      </ol>
+      <p><strong>Output:</strong> Policy Brief + Policy Paper + 2 Nota Dinas</p>
+    </div>
+  </div>
+
+  <h3>3.2 Status Workflow Lengkap</h3>
+  <div class="status-flow">
+    <span class="status-chip">Draft</span><span class="arrow">→</span>
+    <span class="status-chip">Menunggu Pengiriman SRIKANDI</span><span class="arrow">→</span>
+    <span class="status-chip">Menunggu Verifikasi TU</span><span class="arrow">→</span>
+    <span class="status-chip">Terverifikasi</span><span class="arrow">→</span>
+    <span class="status-chip">Masuk Antrian</span><span class="arrow">→</span>
+    <span class="status-chip">Ditugaskan PIC</span><span class="arrow">→</span>
+    <span class="status-chip">Diterima PIC</span><span class="arrow">→</span>
+    <span class="status-chip">Asesmen Awal</span>
+  </div>
+  <div class="two-col" style="margin-top:8px">
+    <div>
+      <p class="branch-label">↓ Cabang A</p>
+      <div class="status-flow" style="flex-direction:column;align-items:flex-start;gap:4px">
+        <span class="status-chip">Tidak Perlu Tindak Lanjut</span>
+        <span class="status-chip">Penyusunan Policy Brief</span>
+        <span class="status-chip">Penyusunan Nota Dinas Tanggapan</span>
+        <span class="status-chip" style="background:#dcfce7;border-color:#86efac;color:#166534">Selesai → Ditutup</span>
+      </div>
+    </div>
+    <div>
+      <p class="branch-label">↓ Cabang B</p>
+      <div class="status-flow" style="flex-direction:column;align-items:flex-start;gap:4px">
+        <span class="status-chip">Perlu Tindak Lanjut</span>
+        <span class="status-chip">Penyusunan Policy Brief</span>
+        <span class="status-chip">Nota Dinas Permintaan Penyesuaian</span>
+        <span class="status-chip">Kajian Lanjutan</span>
+        <span class="status-chip">Penyusunan Policy Paper</span>
+        <span class="status-chip">Nota Dinas Hasil Telaah Akhir</span>
+        <span class="status-chip" style="background:#dcfce7;border-color:#86efac;color:#166534">Selesai → Ditutup</span>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  
+  <h2 id="s4">4. User Role Matrix</h2>
+  <table>
+    <tr>
+      <th>Fitur / Aksi</th>
+      <th>Super Admin</th>
+      <th>TU</th>
+      <th>PIC</th>
+      <th>Klien</th>
+    </tr>
+    <tr><td>Registrasi Akun</td><td>—</td><td>—</td><td>—</td><td>✅</td></tr>
+    <tr><td>Verifikasi Akun Klien</td><td>✅</td><td>✅</td><td>—</td><td>—</td></tr>
+    <tr><td>Kelola Form Dinamis</td><td>✅</td><td>✅</td><td>—</td><td>—</td></tr>
+    <tr><td>Kelola Template Dokumen</td><td>✅</td><td>—</td><td>—</td><td>—</td></tr>
+    <tr><td>Submit Permohonan Telaah</td><td>—</td><td>—</td><td>—</td><td>✅</td></tr>
+    <tr><td>Unduh Nota Dinas Pengajuan</td><td>✅</td><td>✅</td><td>—</td><td>✅</td></tr>
+    <tr><td>Verifikasi Administrasi</td><td>✅</td><td>✅</td><td>—</td><td>—</td></tr>
+    <tr><td>Input Nomor / Tgl Nota Dinas</td><td>✅</td><td>✅</td><td>—</td><td>—</td></tr>
+    <tr><td>Kelola Antrian &amp; Prioritas</td><td>✅</td><td>✅</td><td>—</td><td>—</td></tr>
+    <tr><td>Tugaskan PIC</td><td>✅</td><td>✅</td><td>—</td><td>—</td></tr>
+    <tr><td>Terima / Tolak Penugasan</td><td>—</td><td>—</td><td>✅</td><td>—</td></tr>
+    <tr><td>Asesmen Awal &amp; Pilih Skenario</td><td>—</td><td>—</td><td>✅</td><td>—</td></tr>
+    <tr><td>Upload Policy Brief / Paper</td><td>—</td><td>—</td><td>✅</td><td>—</td></tr>
+    <tr><td>Generate Nota Dinas</td><td>✅</td><td>✅</td><td>✅</td><td>—</td></tr>
+    <tr><td>Lihat Timeline Realtime</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td></tr>
+    <tr><td>Dashboard TU</td><td>✅</td><td>✅</td><td>—</td><td>—</td></tr>
+    <tr><td>Dashboard PIC</td><td>✅</td><td>—</td><td>✅</td><td>—</td></tr>
+    <tr><td>Dashboard Klien</td><td>—</td><td>—</td><td>—</td><td>✅</td></tr>
+    <tr><td>Monitoring SLA</td><td>✅</td><td>✅</td><td>✅</td><td>—</td></tr>
+    <tr><td>Cetak Laporan</td><td>✅</td><td>✅</td><td>—</td><td>—</td></tr>
+    <tr><td>Audit Log</td><td>✅</td><td>—</td><td>—</td><td>—</td></tr>
+    <tr><td>Konfigurasi Hari Libur</td><td>✅</td><td>—</td><td>—</td><td>—</td></tr>
+  </table>
+
+  <hr class="divider" />
+
+  
+  <h2 id="s5">5. ERD &amp; Database Schema MySQL</h2>
+
+  <h3>5.1 Entitas Utama dan Relasi</h3>
+  <table>
+    <tr><th>Entitas</th><th>Relasi</th></tr>
+    <tr><td>ltk_permohonan</td><td>has many ltk_aktivitas_log, ltk_dokumen_output, ltk_antrian; belongs to users (klien)</td></tr>
+    <tr><td>ltk_form_template</td><td>has many ltk_form_field; digunakan oleh ltk_permohonan</td></tr>
+    <tr><td>ltk_form_field</td><td>belongs to ltk_form_template; has many ltk_jawaban_field</td></tr>
+    <tr><td>ltk_jawaban_field</td><td>belongs to ltk_permohonan, ltk_form_field</td></tr>
+    <tr><td>ltk_antrian</td><td>belongs to ltk_permohonan; has one ltk_penugasan_pic</td></tr>
+    <tr><td>ltk_penugasan_pic</td><td>belongs to ltk_antrian, users (pic); has many ltk_asesmen</td></tr>
+    <tr><td>ltk_asesmen</td><td>belongs to ltk_penugasan_pic; determines skenario</td></tr>
+    <tr><td>ltk_dokumen_output</td><td>belongs to ltk_permohonan, users; polymorphic type (policy_brief/policy_paper/nota_dinas)</td></tr>
+    <tr><td>ltk_nota_dinas_template</td><td>has many ltk_nota_dinas_generated</td></tr>
+    <tr><td>ltk_sla_config</td><td>global config SLA per skenario</td></tr>
+    <tr><td>ltk_hari_libur</td><td>master hari libur nasional untuk kalkulasi HK</td></tr>
+    <tr><td>ltk_aktivitas_log</td><td>belongs to ltk_permohonan, users; append-only timeline</td></tr>
+    <tr><td>ltk_notifikasi</td><td>belongs to users; polymorphic referensi</td></tr>
+  </table>
+
+  <h3>5.2 Database Schema MySQL Lengkap</h3>
+
+  <h4>Tabel: ltk_permohonan</h4>
+  <pre>CREATE TABLE ltk_permohonan (
+  id              INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  kode            VARCHAR(30) NOT NULL UNIQUE COMMENT 'LTK-2025-0001',
+  klien_user_id   INT UNSIGNED NOT NULL,
+  unit_kerja_id   INT UNSIGNED NULL,
+  judul           VARCHAR(500) NOT NULL,
+  deskripsi       TEXT NULL,
+  form_template_id INT UNSIGNED NOT NULL,
+  status          ENUM(
+    'draft','menunggu_srikandi','menunggu_verifikasi_tu',
+    'terverifikasi','masuk_antrian','ditugaskan_pic',
+    'diterima_pic','asesmen_awal',
+    'tidak_perlu_tindak_lanjut','penyusunan_policy_brief',
+    'penyusunan_nota_dinas_tanggapan',
+    'perlu_tindak_lanjut','nota_dinas_permintaan_penyesuaian',
+    'kajian_lanjutan','penyusunan_policy_paper',
+    'nota_dinas_hasil_telaah_akhir',
+    'selesai','ditutup'
+  ) NOT NULL DEFAULT 'draft',
+  skenario        ENUM('A','B') NULL,
+  jenis_antrian   ENUM('regular','prioritas') NULL DEFAULT 'regular',
+  nomor_nota_dinas_masuk  VARCHAR(100) NULL,
+  tgl_nota_dinas_masuk    DATE NULL,
+  nomor_nota_dinas_keluar VARCHAR(100) NULL,
+  tgl_nota_dinas_keluar   DATE NULL,
+  pic_user_id     INT UNSIGNED NULL,
+  tgl_penugasan   DATETIME NULL,
+  tgl_terima_pic  DATETIME NULL,
+  sla_hari_kerja  TINYINT UNSIGNED NULL,
+  tgl_deadline    DATE NULL,
+  tgl_selesai     DATETIME NULL,
+  is_sla_breach   TINYINT(1) NOT NULL DEFAULT 0,
+  catatan_tu      TEXT NULL,
+  created_by      INT UNSIGNED NOT NULL,
+  updated_by      INT UNSIGNED NULL,
+  created_at      DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at      DATETIME NULL ON UPDATE CURRENT_TIMESTAMP,
+  deleted_at      DATETIME NULL,
+  FOREIGN KEY (klien_user_id) REFERENCES users(id),
+  FOREIGN KEY (form_template_id) REFERENCES ltk_form_template(id),
+  FOREIGN KEY (pic_user_id) REFERENCES users(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;</pre>
+
+  <h4>Tabel: ltk_form_template</h4>
+  <pre>CREATE TABLE ltk_form_template (
+  id          INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  nama        VARCHAR(200) NOT NULL,
+  deskripsi   TEXT NULL,
+  is_aktif    TINYINT(1) NOT NULL DEFAULT 1,
+  created_by  INT UNSIGNED NOT NULL,
+  created_at  DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at  DATETIME NULL ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;</pre>
+
+  <h4>Tabel: ltk_form_field</h4>
+  <pre>CREATE TABLE ltk_form_field (
+  id              INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  form_template_id INT UNSIGNED NOT NULL,
+  label           VARCHAR(255) NOT NULL,
+  field_name      VARCHAR(100) NOT NULL,
+  tipe            ENUM('text','textarea','number','date','dropdown',
+                       'radio','checkbox','file','pdf') NOT NULL,
+  placeholder     VARCHAR(255) NULL,
+  opsi_pilihan    JSON NULL COMMENT 'untuk dropdown/radio/checkbox',
+  is_required     TINYINT(1) NOT NULL DEFAULT 0,
+  urutan          SMALLINT UNSIGNED NOT NULL DEFAULT 0,
+  is_aktif        TINYINT(1) NOT NULL DEFAULT 1,
+  created_at      DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at      DATETIME NULL ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (form_template_id) REFERENCES ltk_form_template(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;</pre>
+
+  <h4>Tabel: ltk_jawaban_field</h4>
+  <pre>CREATE TABLE ltk_jawaban_field (
+  id              INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  permohonan_id   INT UNSIGNED NOT NULL,
+  form_field_id   INT UNSIGNED NOT NULL,
+  nilai_text      TEXT NULL,
+  nilai_file_path VARCHAR(500) NULL,
+  created_at      DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (permohonan_id) REFERENCES ltk_permohonan(id),
+  FOREIGN KEY (form_field_id) REFERENCES ltk_form_field(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;</pre>
+
+  <h4>Tabel: ltk_asesmen</h4>
+  <pre>CREATE TABLE ltk_asesmen (
+  id              INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  permohonan_id   INT UNSIGNED NOT NULL,
+  pic_user_id     INT UNSIGNED NOT NULL,
+  skenario        ENUM('A','B') NOT NULL,
+  catatan_asesmen TEXT NULL,
+  tgl_asesmen     DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (permohonan_id) REFERENCES ltk_permohonan(id),
+  FOREIGN KEY (pic_user_id) REFERENCES users(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;</pre>
+
+  <h4>Tabel: ltk_dokumen_output</h4>
+  <pre>CREATE TABLE ltk_dokumen_output (
+  id              INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  permohonan_id   INT UNSIGNED NOT NULL,
+  tipe_dokumen    ENUM(
+    'nota_dinas_pengajuan',
+    'nota_dinas_tanggapan',
+    'nota_dinas_permintaan_penyesuaian',
+    'nota_dinas_hasil_telaah_akhir',
+    'policy_brief',
+    'policy_paper'
+  ) NOT NULL,
+  nomor_dokumen   VARCHAR(100) NULL,
+  tgl_dokumen     DATE NULL,
+  file_docx_path  VARCHAR(500) NULL,
+  file_pdf_path   VARCHAR(500) NULL,
+  upload_manual   TINYINT(1) NOT NULL DEFAULT 0,
+  upload_path     VARCHAR(500) NULL,
+  digenerate_oleh INT UNSIGNED NULL,
+  created_at      DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (permohonan_id) REFERENCES ltk_permohonan(id),
+  FOREIGN KEY (digenerate_oleh) REFERENCES users(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;</pre>
+
+  <h4>Tabel: ltk_nota_dinas_template</h4>
+  <pre>CREATE TABLE ltk_nota_dinas_template (
+  id          INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  tipe        ENUM(
+    'nota_dinas_pengajuan',
+    'nota_dinas_tanggapan',
+    'nota_dinas_permintaan_penyesuaian',
+    'nota_dinas_hasil_telaah_akhir'
+  ) NOT NULL,
+  nama        VARCHAR(200) NOT NULL,
+  konten_docx LONGBLOB NULL COMMENT 'file .docx template binary',
+  variabel    JSON NULL COMMENT 'list placeholder variabel',
+  versi       TINYINT UNSIGNED NOT NULL DEFAULT 1,
+  is_aktif    TINYINT(1) NOT NULL DEFAULT 1,
+  created_by  INT UNSIGNED NOT NULL,
+  created_at  DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at  DATETIME NULL ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;</pre>
+
+  <h4>Tabel: ltk_aktivitas_log (Timeline)</h4>
+  <pre>CREATE TABLE ltk_aktivitas_log (
+  id              INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  permohonan_id   INT UNSIGNED NOT NULL,
+  status_dari     VARCHAR(100) NULL,
+  status_ke       VARCHAR(100) NOT NULL,
+  label_aktivitas VARCHAR(255) NOT NULL,
+  catatan         TEXT NULL,
+  dilakukan_oleh  INT UNSIGNED NULL,
+  created_at      DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (permohonan_id) REFERENCES ltk_permohonan(id),
+  FOREIGN KEY (dilakukan_oleh) REFERENCES users(id),
+  INDEX idx_permohonan (permohonan_id),
+  INDEX idx_created (created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;</pre>
+
+  <h4>Tabel: ltk_sla_config</h4>
+  <pre>CREATE TABLE ltk_sla_config (
+  id          INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  skenario    ENUM('A','B') NOT NULL UNIQUE,
+  hari_kerja  TINYINT UNSIGNED NOT NULL,
+  keterangan  VARCHAR(255) NULL,
+  updated_by  INT UNSIGNED NULL,
+  updated_at  DATETIME NULL ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO ltk_sla_config (skenario, hari_kerja, keterangan) VALUES
+('A', 6,  'Tidak memerlukan tindak lanjut'),
+('B', 28, 'Memerlukan tindak lanjut');</pre>
+
+  <h4>Tabel: ltk_hari_libur</h4>
+  <pre>CREATE TABLE ltk_hari_libur (
+  id      INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  tanggal DATE NOT NULL UNIQUE,
+  keterangan VARCHAR(200) NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;</pre>
+
+  <h4>Tabel: ltk_notifikasi</h4>
+  <pre>CREATE TABLE ltk_notifikasi (
+  id              INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  user_id         INT UNSIGNED NOT NULL,
+  permohonan_id   INT UNSIGNED NULL,
+  tipe            VARCHAR(50) NOT NULL,
+  judul           VARCHAR(255) NOT NULL,
+  pesan           TEXT NOT NULL,
+  is_read         TINYINT(1) NOT NULL DEFAULT 0,
+  created_at      DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id),
+  FOREIGN KEY (permohonan_id) REFERENCES ltk_permohonan(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;</pre>
+
+  <h4>Tabel: ltk_klien_profil</h4>
+  <pre>CREATE TABLE ltk_klien_profil (
+  id              INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  user_id         INT UNSIGNED NOT NULL UNIQUE,
+  unit_kerja      VARCHAR(200) NOT NULL,
+  jabatan         VARCHAR(200) NULL,
+  no_telepon      VARCHAR(20) NULL,
+  is_verified     TINYINT(1) NOT NULL DEFAULT 0,
+  verified_by     INT UNSIGNED NULL,
+  verified_at     DATETIME NULL,
+  created_at      DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;</pre>
+
+  <hr class="divider" />
+
+  
+  <h2 id="s6">6. Struktur Folder CodeIgniter 4</h2>
+  <pre>app/
+├── Config/
+│   └── Routes.php               ← tambah route ltk/*
+├── Controllers/
+│   ├── Api/
+│   │   ├── Ltk/
+│   │   │   ├── PermohonanController.php
+│   │   │   ├── FormBuilderController.php
+│   │   │   ├── AntrianController.php
+│   │   │   ├── PicController.php
+│   │   │   ├── AsesmenController.php
+│   │   │   ├── DokumenController.php
+│   │   │   ├── SlaController.php
+│   │   │   ├── TimelineController.php
+│   │   │   ├── DashboardController.php
+│   │   │   ├── LaporanController.php
+│   │   │   └── NotifikasiController.php
+│   │   └── Ltk/KlienController.php
+├── Models/
+│   ├── Ltk/
+│   │   ├── PermohonanModel.php
+│   │   ├── FormTemplateModel.php
+│   │   ├── FormFieldModel.php
+│   │   ├── JawabanFieldModel.php
+│   │   ├── AsesmenModel.php
+│   │   ├── DokumenOutputModel.php
+│   │   ├── NotaDinasTemplateModel.php
+│   │   ├── AktivitasLogModel.php
+│   │   ├── SlaConfigModel.php
+│   │   ├── HariLiburModel.php
+│   │   ├── KlienProfilModel.php
+│   │   └── NotifikasiModel.php
+├── Libraries/
+│   ├── Ltk/
+│   │   ├── SlaCalculator.php    ← hitung hari kerja
+│   │   ├── NotaDinasGenerator.php ← PhpWord + mPDF
+│   │   └── WorkflowEngine.php   ← state machine status
+├── Database/
+│   └── Migrations/
+│       ├── 2026-10-01-000034_CreateLtkFormTemplate.php
+│       ├── 2026-10-01-000035_CreateLtkPermohonan.php
+│       ├── 2026-10-01-000036_CreateLtkFormField.php
+│       ├── 2026-10-01-000037_CreateLtkJawabanField.php
+│       ├── 2026-10-01-000038_CreateLtkAsesmen.php
+│       ├── 2026-10-01-000039_CreateLtkDokumenOutput.php
+│       ├── 2026-10-01-000040_CreateLtkNotaDinasTemplate.php
+│       ├── 2026-10-01-000041_CreateLtkAktivitasLog.php
+│       ├── 2026-10-01-000042_CreateLtkSlaConfig.php
+│       ├── 2026-10-01-000043_CreateLtkHariLibur.php
+│       ├── 2026-10-01-000044_CreateLtkKlienProfil.php
+│       └── 2026-10-01-000045_CreateLtkNotifikasi.php
+├── Views/
+│   └── pages/
+│       └── ltk/
+│           ├── dashboard-tu.php
+│           ├── dashboard-pic.php
+│           ├── dashboard-klien.php
+│           ├── permohonan/
+│           │   ├── index.php
+│           │   ├── create.php
+│           │   ├── detail.php
+│           │   └── timeline.php
+│           ├── form-builder/
+│           │   ├── index.php
+│           │   └── editor.php
+│           ├── antrian/
+│           │   └── index.php
+│           ├── pic/
+│           │   ├── tugas.php
+│           │   └── asesmen.php
+│           ├── dokumen/
+│           │   └── template.php
+│           └── laporan/
+│               └── index.php
+public/
+└── assets/
+    └── ltk/
+        ├── css/ltk.css
+        └── js/
+            ├── form-builder.js
+            ├── timeline.js
+            └── sla-counter.js</pre>
+
+  <hr class="divider" />
+
+  
+  <h2 id="s7">7. API Endpoint Design</h2>
+  <table>
+    <tr><th>Method</th><th>Endpoint</th><th>Deskripsi</th><th>Role</th></tr>
+    <tr><td>POST</td><td><code>/api/ltk/klien/register</code></td><td>Registrasi akun Klien</td><td>Public</td></tr>
+    <tr><td>POST</td><td><code>/api/ltk/klien/verify/{id}</code></td><td>Verifikasi akun Klien</td><td>TU, Admin</td></tr>
+    <tr><td>GET</td><td><code>/api/ltk/form-template</code></td><td>List template form aktif</td><td>Klien</td></tr>
+    <tr><td>POST</td><td><code>/api/ltk/form-template</code></td><td>Buat template form baru</td><td>TU, Admin</td></tr>
+    <tr><td>PUT</td><td><code>/api/ltk/form-template/{id}/fields</code></td><td>Update field pada template</td><td>TU, Admin</td></tr>
+    <tr><td>POST</td><td><code>/api/ltk/permohonan</code></td><td>Submit permohonan telaah</td><td>Klien</td></tr>
+    <tr><td>GET</td><td><code>/api/ltk/permohonan</code></td><td>List permohonan</td><td>TU, Admin</td></tr>
+    <tr><td>GET</td><td><code>/api/ltk/permohonan/saya</code></td><td>Permohonan milik Klien</td><td>Klien</td></tr>
+    <tr><td>GET</td><td><code>/api/ltk/permohonan/{id}</code></td><td>Detail permohonan</td><td>All</td></tr>
+    <tr><td>POST</td><td><code>/api/ltk/permohonan/{id}/generate-nota-dinas</code></td><td>Generate Nota Dinas Pengajuan</td><td>Klien, TU</td></tr>
+    <tr><td>POST</td><td><code>/api/ltk/permohonan/{id}/verifikasi</code></td><td>Verifikasi administrasi TU</td><td>TU, Admin</td></tr>
+    <tr><td>POST</td><td><code>/api/ltk/antrian/{id}/tugaskan</code></td><td>Tugaskan PIC + set prioritas</td><td>TU, Admin</td></tr>
+    <tr><td>POST</td><td><code>/api/ltk/pic/tugas/{id}/terima</code></td><td>PIC terima penugasan</td><td>PIC</td></tr>
+    <tr><td>POST</td><td><code>/api/ltk/asesmen</code></td><td>Submit asesmen awal + skenario</td><td>PIC</td></tr>
+    <tr><td>POST</td><td><code>/api/ltk/dokumen/upload</code></td><td>Upload Policy Brief/Paper</td><td>PIC</td></tr>
+    <tr><td>POST</td><td><code>/api/ltk/dokumen/{id}/generate</code></td><td>Generate Nota Dinas output</td><td>PIC, TU</td></tr>
+    <tr><td>GET</td><td><code>/api/ltk/permohonan/{id}/timeline</code></td><td>Timeline aktivitas</td><td>All</td></tr>
+    <tr><td>GET</td><td><code>/api/ltk/sla/{id}</code></td><td>Status SLA permohonan</td><td>TU, PIC, Admin</td></tr>
+    <tr><td>GET</td><td><code>/api/ltk/dashboard/tu</code></td><td>Widget dashboard TU</td><td>TU, Admin</td></tr>
+    <tr><td>GET</td><td><code>/api/ltk/dashboard/pic</code></td><td>Widget dashboard PIC</td><td>PIC</td></tr>
+    <tr><td>GET</td><td><code>/api/ltk/dashboard/klien</code></td><td>Widget dashboard Klien</td><td>Klien</td></tr>
+    <tr><td>GET</td><td><code>/api/ltk/laporan/{jenis}</code></td><td>Generate laporan</td><td>TU, Admin</td></tr>
+    <tr><td>POST</td><td><code>/api/ltk/hari-libur</code></td><td>Input hari libur nasional</td><td>Admin</td></tr>
+    <tr><td>PUT</td><td><code>/api/ltk/sla-config</code></td><td>Update konfigurasi SLA</td><td>Admin</td></tr>
+  </table>
+
+  <hr class="divider" />
+
+  
+  <h2 id="s8">8. SLA Monitoring Design</h2>
+
+  <h3>8.1 Logika Kalkulasi Hari Kerja</h3>
+  <div class="section-box">
+    <p><strong>Library:</strong> <code>app/Libraries/Ltk/SlaCalculator.php</code></p>
+    <p><strong>Aturan:</strong></p>
+    <ul>
+      <li>Hari kerja = Senin–Jumat, bukan hari libur nasional (<code>ltk_hari_libur</code>)</li>
+      <li>SLA mulai dihitung saat PIC menerima penugasan (<code>tgl_terima_pic</code>)</li>
+      <li>Deadline = <code>tgl_terima_pic + N hari kerja</code></li>
+      <li>Skenario A: 6 HK  |  Skenario B: 28 HK</li>
+    </ul>
+    <p><strong>Method utama:</strong></p>
+    <ul>
+      <li><code>addWorkingDays(DateTime $start, int $days): DateTime</code></li>
+      <li><code>countWorkingDays(DateTime $start, DateTime $end): int</code></li>
+      <li><code>getRemainingWorkingDays(int $permohonanId): int</code></li>
+    </ul>
+  </div>
+
+  <h3>8.2 Status SLA</h3>
+  <table>
+    <tr><th>Kondisi</th><th>Label</th><th>Warna</th></tr>
+    <tr><td>Sisa &gt; 3 HK</td><td>On Track</td><td style="color:#166534">Hijau</td></tr>
+    <tr><td>Sisa 1–3 HK</td><td>Mendekati Deadline</td><td style="color:#b45309">Kuning</td></tr>
+    <tr><td>Sisa 0 HK (hari H)</td><td>Hari Terakhir</td><td style="color:#b45309">Orange</td></tr>
+    <tr><td>Sudah lewat deadline</td><td>SLA Breach / Terlambat</td><td style="color:#b91c1c">Merah</td></tr>
+  </table>
+
+  <h3>8.3 Scheduled Task (Cron)</h3>
+  <pre>/* app/Commands/LtkSlaCheck.php */
+// Jalankan setiap hari pukul 08:00
+// php spark ltk:sla-check
+// → update is_sla_breach = 1 untuk permohonan yang lewat deadline
+// → kirim notifikasi ke TU dan PIC terkait</pre>
+
+  <hr class="divider" />
+
+  
+  <h2 id="s9">9. Notification Flow</h2>
+  <table>
+    <tr><th>Event Trigger</th><th>Penerima</th><th>Channel</th></tr>
+    <tr><td>Registrasi akun baru</td><td>TU</td><td>In-app + Email</td></tr>
+    <tr><td>Akun terverifikasi</td><td>Klien</td><td>In-app + Email</td></tr>
+    <tr><td>Permohonan di-submit</td><td>TU</td><td>In-app</td></tr>
+    <tr><td>Verifikasi administrasi selesai</td><td>Klien</td><td>In-app + Email</td></tr>
+    <tr><td>PIC ditugaskan</td><td>PIC</td><td>In-app + Email</td></tr>
+    <tr><td>PIC menerima tugas</td><td>TU, Klien</td><td>In-app</td></tr>
+    <tr><td>Asesmen selesai</td><td>TU, Klien</td><td>In-app</td></tr>
+    <tr><td>Policy Brief / Paper di-upload</td><td>TU, Klien</td><td>In-app</td></tr>
+    <tr><td>Nota Dinas diterbitkan</td><td>Klien</td><td>In-app + Email</td></tr>
+    <tr><td>Permohonan selesai</td><td>Klien, TU</td><td>In-app + Email</td></tr>
+    <tr><td>SLA mendekati deadline (H-3)</td><td>PIC, TU</td><td>In-app + Email</td></tr>
+    <tr><td>SLA Breach</td><td>PIC, TU, Admin</td><td>In-app + Email</td></tr>
+  </table>
+
+  <hr class="divider" />
+
+  
+  <h2 id="s10">10. Wireframe &amp; Rancangan UI/UX</h2>
+
+  <h3>10.1 Dashboard TU — Widget Layout</h3>
+  <div class="section-box">
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:8px">
+      <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:5px;padding:10px;text-align:center"><div style="font-size:22px;font-weight:700;color:#1d4ed8">24</div><div style="font-size:11px;color:#57606a">Total</div></div>
+      <div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:5px;padding:10px;text-align:center"><div style="font-size:22px;font-weight:700;color:#c2410c">5</div><div style="font-size:11px;color:#57606a">Menunggu Verifikasi</div></div>
+      <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:5px;padding:10px;text-align:center"><div style="font-size:22px;font-weight:700;color:#15803d">8</div><div style="font-size:11px;color:#57606a">Dalam Antrian</div></div>
+      <div style="background:#faf5ff;border:1px solid #e9d5ff;border-radius:5px;padding:10px;text-align:center"><div style="font-size:22px;font-weight:700;color:#7c3aed">6</div><div style="font-size:11px;color:#57606a">Sedang Ditelaah</div></div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
+      <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:5px;padding:10px;text-align:center"><div style="font-size:22px;font-weight:700;color:#15803d">3</div><div style="font-size:11px;color:#57606a">Selesai</div></div>
+      <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:5px;padding:10px;text-align:center"><div style="font-size:22px;font-weight:700;color:#b45309">2</div><div style="font-size:11px;color:#57606a">Mendekati SLA</div></div>
+      <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:5px;padding:10px;text-align:center"><div style="font-size:22px;font-weight:700;color:#b91c1c">1</div><div style="font-size:11px;color:#57606a">Terlambat SLA</div></div>
+      <div style="background:#f7f8fa;border:1px solid #e5e7eb;border-radius:5px;padding:10px;text-align:center"><div style="font-size:22px;font-weight:700;color:#1f2328">—</div><div style="font-size:11px;color:#57606a">Menunggu Hasil</div></div>
+    </div>
+  </div>
+
+  <h3>10.2 Timeline Klien — Komponen UI</h3>
+  <div class="section-box">
+    <div style="display:flex;flex-direction:column;gap:0">
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:8px 0">
+        <div style="width:12px;height:12px;border-radius:50%;background:#15803d;margin-top:4px;flex-shrink:0"></div>
+        <div><strong>Form Dikirim</strong><br /><span style="font-size:11px;color:#57606a">10 Jan 2025, 09:15 — Ahmad Suryana</span></div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:8px 0">
+        <div style="width:12px;height:12px;border-radius:50%;background:#15803d;margin-top:4px;flex-shrink:0"></div>
+        <div><strong>Nota Dinas Digenerate</strong><br /><span style="font-size:11px;color:#57606a">10 Jan 2025, 09:16 — System</span></div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:8px 0">
+        <div style="width:12px;height:12px;border-radius:50%;background:#15803d;margin-top:4px;flex-shrink:0"></div>
+        <div><strong>Diverifikasi TU</strong><br /><span style="font-size:11px;color:#57606a">13 Jan 2025, 11:00 — Siti Rahma (TU)</span></div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:8px 0">
+        <div style="width:12px;height:12px;border-radius:50%;background:#3b82d4;margin-top:4px;flex-shrink:0"></div>
+        <div><strong>Ditugaskan ke PIC</strong><br /><span style="font-size:11px;color:#57606a">14 Jan 2025, 08:30 — Siti Rahma (TU)</span></div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start;padding:8px 0">
+        <div style="width:12px;height:12px;border-radius:50%;background:#e5e7eb;margin-top:4px;flex-shrink:0"></div>
+        <div style="color:#94a3b8"><strong>Asesmen Awal</strong><br /><span style="font-size:11px">Menunggu...</span></div>
+      </div>
+    </div>
+  </div>
+
+  <h3>10.3 Form Builder (Drag &amp; Drop)</h3>
+  <p>UI Form Builder dibangun menggunakan <strong>SortableJS</strong> untuk drag-and-drop urutan field. Setiap field memiliki panel properti (label, tipe, required, placeholder, opsi) yang diedit secara inline. Perubahan dikirim ke API via AJAX tanpa page reload.</p>
+
+  <hr class="divider" />
+
+  
+  <h2 id="s11">11. Sequence Diagram</h2>
+
+  <h3>11.1 Alur Submit Permohonan → Generate Nota Dinas</h3>
+  <pre>Klien → Browser : Isi Formulir Dinamis
+Browser → API (/api/ltk/permohonan POST) : Submit data + file
+API → FormFieldModel : Validasi jawaban wajib
+API → PermohonanModel : Insert ltk_permohonan (status=draft)
+API → JawabanFieldModel : Insert ltk_jawaban_field (bulk)
+API → AktivitasLogModel : Log "Form Dikirim"
+API → NotaDinasGenerator : loadTemplate(nota_dinas_pengajuan)
+NotaDinasGenerator → PhpWord : Substitusi variabel
+NotaDinasGenerator → mPDF : Convert DOCX → PDF
+API → DokumenOutputModel : Insert ltk_dokumen_output
+API → PermohonanModel : Update status = 'menunggu_srikandi'
+API → AktivitasLogModel : Log "Nota Dinas Digenerate"
+API → NotifikasiModel : Kirim notif ke TU
+API → Browser : Response {permohonan_id, download_url_docx, download_url_pdf}</pre>
+
+  <h3>11.2 Alur Penugasan PIC → SLA Mulai</h3>
+  <pre>TU → API (/api/ltk/antrian/{id}/tugaskan POST) : {pic_user_id, jenis_antrian}
+API → AntrianModel : Update jenis_antrian
+API → PermohonanModel : Update pic_user_id, tgl_penugasan, status='ditugaskan_pic'
+API → SlaCalculator : getSlaConfig(skenario=null) → pending
+API → AktivitasLogModel : Log "Ditugaskan ke PIC"
+API → NotifikasiModel : Kirim notif ke PIC
+
+PIC → API (/api/ltk/pic/tugas/{id}/terima POST)
+API → PermohonanModel : Update tgl_terima_pic = NOW(), status='diterima_pic'
+API → SlaCalculator : addWorkingDays(tgl_terima_pic, sla_hk) → tgl_deadline
+API → PermohonanModel : Update tgl_deadline
+API → AktivitasLogModel : Log "PIC Menerima Tugas, SLA dimulai"
+API → NotifikasiModel : Kirim notif ke TU + Klien</pre>
+
+  <hr class="divider" />
+
+  
+  <h2 id="s12">12. Roadmap Pengembangan</h2>
+  <table>
+    <tr><th>Fase</th><th>Durasi</th><th>Deliverable</th></tr>
+    <tr>
+      <td><span class="badge badge-blue">Fase 1</span><br />Foundation</td>
+      <td>Sprint 1–2<br />(4 minggu)</td>
+      <td>Migrasi DB, RBAC Role baru (klien/pic/tu-ltk), registrasi &amp; verifikasi akun, form builder dasar (CRUD field), halaman pengajuan permohonan</td>
+    </tr>
+    <tr>
+      <td><span class="badge badge-purple">Fase 2</span><br />Workflow Core</td>
+      <td>Sprint 3–4<br />(4 minggu)</td>
+      <td>WorkflowEngine (state machine), verifikasi administrasi TU, manajemen antrian &amp; prioritas, penugasan PIC, asesmen awal &amp; pilih skenario</td>
+    </tr>
+    <tr>
+      <td><span class="badge badge-orange">Fase 3</span><br />Dokumen &amp; SLA</td>
+      <td>Sprint 5–6<br />(4 minggu)</td>
+      <td>Generate Nota Dinas (PhpWord + mPDF), upload Policy Brief/Paper, template manager, SlaCalculator + cron monitoring, notifikasi SLA breach</td>
+    </tr>
+    <tr>
+      <td><span class="badge badge-green">Fase 4</span><br />Dashboard &amp; Laporan</td>
+      <td>Sprint 7–8<br />(4 minggu)</td>
+      <td>Dashboard TU/PIC/Klien (widget + chart), timeline realtime Klien, 10 jenis laporan, notifikasi in-app + email</td>
+    </tr>
+    <tr>
+      <td><span class="badge badge-gray">Fase 5</span><br />Stabilisasi &amp; UAT</td>
+      <td>Sprint 9–10<br />(4 minggu)</td>
+      <td>UAT dengan user ANRI, perbaikan bug, optimasi query, dokumentasi, deployment production</td>
+    </tr>
+  </table>
+  <p style="font-size:12px;color:#57606a"><strong>Total estimasi:</strong> ~20 minggu (5 bulan) dengan 1 tim developer (1 Backend + 1 Frontend + 1 QA).</p>
+
+  <hr class="divider" />
+
+  
+  <h2 id="s13">13. Backlog Sprint Agile</h2>
+
+  <div class="sprint-card">
+    <div class="sprint-header">Sprint 1 — Database &amp; Auth Foundation (2 minggu)</div>
+    <div class="sprint-body">
+      <ul>
+        <li>Buat 12 file migrasi tabel LTK</li>
+        <li>Tambah role <code>klien</code>, <code>pic_telaah</code>, <code>tu_ltk</code> ke CI Shield</li>
+        <li>Halaman registrasi Klien dengan form unit kerja</li>
+        <li>Halaman verifikasi akun Klien oleh TU</li>
+        <li>Guard middleware per route LTK</li>
+      </ul>
+    </div>
+  </div>
+  <div class="sprint-card">
+    <div class="sprint-header">Sprint 2 — Form Builder Dinamis (2 minggu)</div>
+    <div class="sprint-body">
+      <ul>
+        <li>CRUD <code>ltk_form_template</code> dan <code>ltk_form_field</code></li>
+        <li>UI drag-and-drop field reordering (SortableJS)</li>
+        <li>Renderer form dinamis untuk Klien</li>
+        <li>Validasi server-side field wajib</li>
+        <li>Simpan jawaban ke <code>ltk_jawaban_field</code></li>
+      </ul>
+    </div>
+  </div>
+  <div class="sprint-card">
+    <div class="sprint-header">Sprint 3 — Workflow Engine &amp; Verifikasi TU (2 minggu)</div>
+    <div class="sprint-body">
+      <ul>
+        <li>Implementasi <code>WorkflowEngine.php</code> (state machine + guard)</li>
+        <li>Halaman daftar permohonan TU + filter status</li>
+        <li>Aksi verifikasi administrasi + input nomor ND</li>
+        <li>Endpoint manajemen antrian + ubah prioritas</li>
+        <li>Log otomatis ke <code>ltk_aktivitas_log</code> setiap transisi</li>
+      </ul>
+    </div>
+  </div>
+  <div class="sprint-card">
+    <div class="sprint-header">Sprint 4 — Penugasan PIC &amp; Asesmen (2 minggu)</div>
+    <div class="sprint-body">
+      <ul>
+        <li>UI penugasan PIC (dropdown user ber-role pic)</li>
+        <li>Dashboard PIC: daftar tugas aktif</li>
+        <li>Form asesmen awal + pilihan skenario A/B</li>
+        <li>Pemicu SLA saat PIC terima tugas</li>
+        <li>Notifikasi in-app penugasan</li>
+      </ul>
+    </div>
+  </div>
+  <div class="sprint-card">
+    <div class="sprint-header">Sprint 5 — Generate Dokumen &amp; Upload Output (2 minggu)</div>
+    <div class="sprint-body">
+      <ul>
+        <li>Integrasi PhpWord untuk generate DOCX</li>
+        <li>Integrasi mPDF untuk convert ke PDF</li>
+        <li>Template manager Nota Dinas (upload .docx + variabel)</li>
+        <li>Upload Policy Brief / Policy Paper oleh PIC</li>
+        <li>Download dokumen output oleh Klien</li>
+      </ul>
+    </div>
+  </div>
+  <div class="sprint-card">
+    <div class="sprint-header">Sprint 6 — SLA Monitoring &amp; Notifikasi (2 minggu)</div>
+    <div class="sprint-body">
+      <ul>
+        <li>Library <code>SlaCalculator.php</code> (hari kerja, libur nasional)</li>
+        <li>Spark command <code>ltk:sla-check</code> (cron harian)</li>
+        <li>Badge status SLA pada list permohonan</li>
+        <li>Notifikasi email (CI Email + template)</li>
+        <li>Halaman konfigurasi hari libur nasional</li>
+      </ul>
+    </div>
+  </div>
+  <div class="sprint-card">
+    <div class="sprint-header">Sprint 7–8 — Dashboard &amp; Laporan (4 minggu)</div>
+    <div class="sprint-body">
+      <ul>
+        <li>Dashboard TU: 8 widget + grafik tren bulanan</li>
+        <li>Dashboard PIC: 7 widget + countdown SLA</li>
+        <li>Dashboard Klien: 5 widget + timeline realtime</li>
+        <li>10 modul laporan + export Excel/PDF</li>
+        <li>Chart menggunakan Chart.js (AdminLTE default)</li>
+      </ul>
+    </div>
+  </div>
+  <div class="sprint-card">
+    <div class="sprint-header">Sprint 9–10 — UAT &amp; Go-Live (4 minggu)</div>
+    <div class="sprint-body">
+      <ul>
+        <li>UAT bersama TU, PIC, dan Klien ANRI</li>
+        <li>Perbaikan temuan UAT</li>
+        <li>Optimasi query N+1 (eager loading CI4)</li>
+        <li>Security review (CSRF, XSS, file upload validation)</li>
+        <li>Deployment ke server produksi + seed data awal</li>
+      </ul>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  
+  <h2 id="s14">14. Risiko Implementasi</h2>
+  <table class="risk-row">
+    <tr><th>Risiko</th><th>Dampak</th><th>Kemungkinan</th><th>Mitigasi</th></tr>
+    <tr>
+      <td>Kompleksitas form dinamis dengan berbagai tipe field</td>
+      <td>Tinggi</td><td><span class="badge badge-orange">Sedang</span></td>
+      <td>Gunakan JSON schema untuk validasi, test coverage per tipe field</td>
+    </tr>
+    <tr>
+      <td>Kalkulasi hari kerja tidak akurat (libur nasional)</td>
+      <td>Tinggi</td><td><span class="badge badge-orange">Sedang</span></td>
+      <td>Seed data hari libur tahunan, UI input libur oleh Admin, unit test SlaCalculator</td>
+    </tr>
+    <tr>
+      <td>Generate DOCX/PDF gagal pada server shared hosting</td>
+      <td>Tinggi</td><td><span class="badge badge-orange">Sedang</span></td>
+      <td>Test PhpWord + mPDF di environment produksi sejak Sprint 5; fallback ke TCPDF</td>
+    </tr>
+    <tr>
+      <td>Integrasi SRIKANDI bersifat manual (tidak ada API)</td>
+      <td>Sedang</td><td><span class="badge badge-blue">Tinggi</span></td>
+      <td>Desain alur sebagai semi-manual: Klien unduh ND, TU konfirmasi nomor ND masuk</td>
+    </tr>
+    <tr>
+      <td>Perubahan kebutuhan form di tengah pengembangan</td>
+      <td>Sedang</td><td><span class="badge badge-blue">Tinggi</span></td>
+      <td>Arsitektur form builder yang fleksibel + versioning template; freeze requirement sebelum Sprint 2</td>
+    </tr>
+    <tr>
+      <td>Kinerja query laporan pada data besar</td>
+      <td>Sedang</td><td><span class="badge badge-gray">Rendah</span></td>
+      <td>Index pada kolom status, created_at, pic_user_id; lazy loading; pagination</td>
+    </tr>
+    <tr>
+      <td>Adopsi pengguna rendah (Klien tidak terbiasa)</td>
+      <td>Sedang</td><td><span class="badge badge-orange">Sedang</span></td>
+      <td>UI sederhana, panduan pengguna (tooltip/help text), pelatihan sebelum go-live</td>
+    </tr>
+  </table>
+
+  <hr class="divider" />
+
+  
+  <h2 id="s15">15. Rekomendasi Arsitektur &amp; Best Practice</h2>
+
+  <h3>15.1 Arsitektur Sistem</h3>
+  <div class="section-box">
+    <p><strong>Pattern:</strong> Service Layer + Repository-like Model (CI4 native)</p>
+    <ul>
+      <li><strong>Controller</strong>: thin, hanya route request ke Service/Model</li>
+      <li><strong>Model</strong>: query builder, scope methods, tidak ada business logic</li>
+      <li><strong>Library/Service</strong>: <code>WorkflowEngine</code>, <code>SlaCalculator</code>, <code>NotaDinasGenerator</code> — seluruh business logic terpusat di sini</li>
+      <li><strong>Event System</strong>: gunakan CI4 Events untuk trigger <code>AktivitasLogModel</code> dan <code>NotifikasiModel</code> secara decoupled</li>
+    </ul>
+  </div>
+
+  <h3>15.2 WorkflowEngine Design</h3>
+  <pre>// app/Libraries/Ltk/WorkflowEngine.php
+class WorkflowEngine {
+    // Definisi transisi yang diizinkan
+    private array $transitions = [
+        'draft'                    =&gt; ['menunggu_srikandi'],
+        'menunggu_srikandi'        =&gt; ['menunggu_verifikasi_tu'],
+        'menunggu_verifikasi_tu'   =&gt; ['terverifikasi'],
+        'terverifikasi'            =&gt; ['masuk_antrian'],
+        'masuk_antrian'            =&gt; ['ditugaskan_pic'],
+        'ditugaskan_pic'           =&gt; ['diterima_pic'],
+        'diterima_pic'             =&gt; ['asesmen_awal'],
+        'asesmen_awal'             =&gt; ['tidak_perlu_tindak_lanjut', 'perlu_tindak_lanjut'],
+        // ... dst.
+    ];
+
+    public function canTransition(string $from, string $to): bool { ... }
+    public function transition(int $permohonanId, string $toStatus, int $userId, string $catatan = ''): bool { ... }
+}</pre>
+
+  <h3>15.3 Best Practice Pengembangan</h3>
+  <table>
+    <tr><th>Area</th><th>Rekomendasi</th></tr>
+    <tr><td>Database</td><td>Soft delete pada <code>ltk_permohonan</code>; JSON hanya untuk opsi pilihan, bukan data kritis; Index wajib pada FK dan kolom filter</td></tr>
+    <tr><td>Keamanan</td><td>Validasi tipe MIME file upload (tidak hanya ekstensi); CSRF token pada seluruh form; sanitasi output di View; Shield JWT untuk API</td></tr>
+    <tr><td>File Upload</td><td>Simpan di luar <code>public/</code> (e.g. <code>writable/uploads/ltk/</code>); serve melalui controller dengan cek otorisasi; max ukuran per tipe</td></tr>
+    <tr><td>Generate Dokumen</td><td>Queue job untuk generate DOCX/PDF besar; simpan hasil ke disk dan beri URL download; jangan generate ulang jika sudah ada</td></tr>
+    <tr><td>SLA</td><td>Simpan <code>tgl_deadline</code> di DB (bukan dihitung runtime); update cron harian; tampilkan countdown di UI menggunakan JS</td></tr>
+    <tr><td>Testing</td><td>Unit test untuk <code>SlaCalculator</code> (edge case weekend, libur); Feature test workflow transitions; Validation test form field types</td></tr>
+    <tr><td>Migrasi</td><td>Prefix semua tabel modul dengan <code>ltk_</code> untuk isolasi; satu file migrasi per tabel</td></tr>
+  </table>
+
+  <h3>15.4 Stack Tambahan yang Direkomendasikan</h3>
+  <ul>
+    <li><strong>PhpWord</strong> (<code>phpoffice/phpword</code>): generate DOCX dari template</li>
+    <li><strong>mPDF</strong> (<code>mpdf/mpdf</code>): konversi HTML/DOCX ke PDF</li>
+    <li><strong>SortableJS</strong>: drag-and-drop form builder UI</li>
+    <li><strong>Chart.js</strong>: grafik dashboard (sudah ada di AdminLTE)</li>
+    <li><strong>CI4 Tasks/Scheduler</strong> atau cron server: <code>ltk:sla-check</code> harian</li>
+    <li><strong>CI Shield</strong>: sudah tersedia di project, tambah grup role baru</li>
+  </ul>
+
+  <footer>
+    <p>Made with IBM Bob</p>
+  </footer>
+
+</div>
+</body>
+</html>

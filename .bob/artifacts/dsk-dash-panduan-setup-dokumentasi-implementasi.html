@@ -1,0 +1,414 @@
+
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>DSK-DASH — Dokumentasi Implementasi</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, "Segoe UI", system-ui, sans-serif; font-size: 14px; line-height: 1.6; background: #ffffff; color: #1f2328; }
+  .container { max-width: 760px; margin: 0 auto; padding: 32px 20px 60px; }
+  h1 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+  .subtitle { color: #57606a; font-size: 13px; margin-bottom: 32px; }
+  h2 { font-size: 16px; font-weight: 700; margin: 32px 0 12px; border-bottom: 1px solid #e5e7eb; padding-bottom: 6px; }
+  h3 { font-size: 14px; font-weight: 600; margin: 16px 0 6px; }
+  p { margin-bottom: 8px; }
+  ul, ol { padding-left: 20px; margin-bottom: 10px; }
+  li { margin-bottom: 4px; }
+  code { font-family: "SF Mono", "Fira Mono", monospace; font-size: 12px; background: #f7f8fa; border: 1px solid #e5e7eb; border-radius: 4px; padding: 1px 5px; }
+  pre { background: #f7f8fa; border: 1px solid #e5e7eb; border-radius: 6px; padding: 14px 16px; margin: 10px 0 14px; overflow-x: auto; }
+  pre code { background: none; border: none; padding: 0; font-size: 12px; }
+  .badge { display: inline-block; font-size: 11px; font-weight: 600; border-radius: 4px; padding: 2px 8px; }
+  .badge-green  { background: #d1fae5; color: #065f46; }
+  .badge-red    { background: #fee2e2; color: #991b1b; }
+  .badge-yellow { background: #fef9c3; color: #854d0e; }
+  .badge-blue   { background: #dbeafe; color: #1d4ed8; }
+  .card { background: #f7f8fa; border: 1px solid #e5e7eb; border-radius: 8px; padding: 16px; margin-bottom: 14px; }
+  .card-title { font-weight: 600; font-size: 13px; margin-bottom: 8px; }
+  .step { display: flex; gap: 12px; margin-bottom: 18px; }
+  .step-num { flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%; background: #3b82d4; color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+  .step-body { flex: 1; }
+  .step-title { font-weight: 600; margin-bottom: 4px; }
+  table { width: 100%; border-collapse: collapse; margin-bottom: 14px; font-size: 13px; }
+  th { background: #f7f8fa; text-align: left; padding: 7px 10px; border: 1px solid #e5e7eb; font-weight: 600; }
+  td { padding: 7px 10px; border: 1px solid #e5e7eb; vertical-align: top; }
+  tr:nth-child(even) td { background: #fafafa; }
+  .warn { background: #fef9c3; border: 1px solid #fde047; border-radius: 6px; padding: 10px 14px; margin-bottom: 12px; font-size: 13px; }
+  .info { background: #dbeafe; border: 1px solid #93c5fd; border-radius: 6px; padding: 10px 14px; margin-bottom: 12px; font-size: 13px; }
+  .check { color: #16a34a; font-weight: 700; }
+  .cross { color: #dc2626; font-weight: 700; }
+  hr { border: none; border-top: 1px solid #e5e7eb; margin: 28px 0; }
+  .footer { text-align: center; color: #57606a; font-size: 12px; margin-top: 40px; padding-top: 16px; border-top: 1px solid #e5e7eb; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <h1>DSK-DASH — Dokumentasi Implementasi</h1>
+  <p class="subtitle">Google Calendar Integration + Security Hardening  |  CodeIgniter 4.7.4  |  Diperbarui: September 2026</p>
+
+  
+  <h2>Ringkasan Perubahan</h2>
+
+  <table>
+    <thead><tr><th>Kategori</th><th>File</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>Google Calendar</td><td><code>app/Libraries/Schedule/GoogleCalendarService.php</code></td><td><span class="badge badge-green">✓ Updated</span></td></tr>
+      <tr><td>Google Calendar</td><td><code>app/Controllers/Api/Schedule/GoogleCalendarController.php</code></td><td><span class="badge badge-green">✓ Updated</span></td></tr>
+      <tr><td>Google Calendar</td><td><code>app/Controllers/Api/Schedule/ScheduleController.php</code></td><td><span class="badge badge-green">✓ Updated</span></td></tr>
+      <tr><td>Google Calendar</td><td><code>app/Models/Schedule/ScheduleModel.php</code></td><td><span class="badge badge-green">✓ Updated</span></td></tr>
+      <tr><td>Google Calendar</td><td><code>app/Views/auth/google_oauth_callback.php</code></td><td><span class="badge badge-green">✓ Bug Fixed</span></td></tr>
+      <tr><td>Google Calendar</td><td><code>public/assets/js/modules/schedule.js</code></td><td><span class="badge badge-green">✓ Updated</span></td></tr>
+      <tr><td>Database</td><td><code>app/Database/Migrations/2026-11-02-000055_AddGoogleSyncErrorToSchedules.php</code></td><td><span class="badge badge-green">✓ Migrated</span></td></tr>
+      <tr><td>Security</td><td><code>app/Filters/RateLimit5Filter.php</code></td><td><span class="badge badge-blue">✓ Created</span></td></tr>
+      <tr><td>Security</td><td><code>app/Filters/RateLimit10Filter.php</code></td><td><span class="badge badge-blue">✓ Created</span></td></tr>
+      <tr><td>Security</td><td><code>app/Config/Filters.php</code></td><td><span class="badge badge-green">✓ Updated</span></td></tr>
+      <tr><td>Security</td><td><code>app/Config/Routes.php</code></td><td><span class="badge badge-green">✓ Updated</span></td></tr>
+      <tr><td>Security</td><td><code>app/Config/Security.php</code></td><td><span class="badge badge-green">✓ Updated</span></td></tr>
+      <tr><td>Security</td><td><code>app/Controllers/Api/AdminController.php</code></td><td><span class="badge badge-green">✓ Updated</span></td></tr>
+      <tr><td>Security</td><td><code>app/Controllers/Api/KegiatanController.php</code></td><td><span class="badge badge-green">✓ Updated</span></td></tr>
+      <tr><td>Security</td><td><code>app/Controllers/Api/RoController.php</code></td><td><span class="badge badge-green">✓ Updated</span></td></tr>
+      <tr><td>Security</td><td><code>app/Libraries/EmailService.php</code></td><td><span class="badge badge-green">✓ Updated</span></td></tr>
+      <tr><td>Security</td><td><code>app/Models/OtpModel.php</code></td><td><span class="badge badge-green">✓ Updated</span></td></tr>
+    </tbody>
+  </table>
+
+  
+  <h2>TAHAP 1 — Composer Install</h2>
+
+  <p>Pastikan Google API Client Library sudah terinstall. Jalankan di root project:</p>
+  <pre><code>composer require google/apiclient:^2.15</code></pre>
+  <p>Verifikasi:</p>
+  <pre><code>composer show google/apiclient</code></pre>
+
+  
+  <h2>TAHAP 2 — Jalankan Migration</h2>
+
+  <p>Migration <code>AddGoogleSyncErrorToSchedules</code> sudah dijalankan dan kolom <code>google_sync_error</code> sudah ada di tabel <code>schedules</code>.</p>
+  <p>Jika perlu di-reset atau dijalankan ulang:</p>
+  <pre><code>php spark migrate</code></pre>
+  <p>Verifikasi kolom:</p>
+  <pre><code>php spark db:table schedules</code></pre>
+  <p>Kolom yang harus ada di tabel <code>schedules</code>:</p>
+  <ul>
+    <li><code>google_event_id</code> — ID event dari Google Calendar</li>
+    <li><code>google_calendar_id</code> — Calendar ID target</li>
+    <li><code>google_sync_status</code> — <code>pending</code> / <code>synced</code> / <code>failed</code></li>
+    <li><code>google_synced_at</code> — timestamp terakhir sync berhasil</li>
+    <li><code>google_sync_error</code> — pesan error terakhir (aman, tanpa credential)</li>
+  </ul>
+
+  
+  <h2>TAHAP 3 — Google Cloud Console Setup</h2>
+
+  <div class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <div class="step-title">Buat / Pilih Google Cloud Project</div>
+      Buka <strong>console.cloud.google.com</strong>, login dengan akun Google yang Calendar-nya akan dipakai, buat project baru atau pilih yang sudah ada.
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <div class="step-title">Enable Google Calendar API</div>
+      Masuk ke <strong>APIs &amp; Services → Library</strong>, cari <em>Google Calendar API</em>, klik <strong>Enable</strong>.
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <div class="step-title">Konfigurasi OAuth Consent Screen</div>
+      Masuk ke <strong>APIs &amp; Services → OAuth consent screen</strong>. Pilih <em>External</em> (atau <em>Internal</em> jika Google Workspace). Isi App Name, User Support Email, Developer Contact. Tambahkan akun Google Anda sebagai <em>Test User</em> jika status aplikasi masih Testing.
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <div class="step-title">Buat OAuth Client ID</div>
+      Masuk ke <strong>APIs &amp; Services → Credentials → Create Credentials → OAuth Client ID</strong>.
+      Pilih Application Type: <strong>Web application</strong>. Beri nama misal: <em>Agenda Web</em>.
+      <br /><br />
+      Tambahkan <strong>Authorized Redirect URI</strong> (gunakan URL aplikasi Anda):
+      <pre><code>http://localhost/DSK-DASH/public/google-oauth-callback</code></pre>
+      <div class="warn">⚠️ URL harus sama persis termasuk http/https, path, dan tanpa trailing slash. Untuk production gunakan HTTPS.</div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">5</div>
+    <div class="step-body">
+      <div class="step-title">Salin Client ID dan Client Secret</div>
+      Setelah OAuth Client dibuat, salin <strong>Client ID</strong> dan <strong>Client Secret</strong> — akan diisi ke file <code>.env</code> di langkah berikutnya.
+    </div>
+  </div>
+
+  
+  <h2>TAHAP 4 — Konfigurasi .env</h2>
+
+  <p>Edit file <code>.env</code> di root project, tambahkan / isi konfigurasi berikut:</p>
+  <pre><code># ── Google Calendar Integration ──────────────────────────────────
+GOOGLE_CLIENT_ID="YOUR_CLIENT_ID_DARI_GOOGLE_CLOUD"
+GOOGLE_CLIENT_SECRET="YOUR_CLIENT_SECRET_DARI_GOOGLE_CLOUD"
+GOOGLE_REDIRECT_URI="http://localhost/DSK-DASH/public/google-oauth-callback"
+GOOGLE_CALENDAR_ID="primary"</code></pre>
+
+  <div class="warn">⚠️ Jangan commit <code>.env</code> ke repository. Pastikan <code>.env</code> ada di <code>.gitignore</code>.</div>
+
+  <p>Setelah diisi, halaman Settings → Integrasi Google Calendar di web akan menampilkan:</p>
+  <ul>
+    <li><span class="check">✓</span> Client ID — Terdeteksi</li>
+    <li><span class="check">✓</span> Client Secret — Terdeteksi</li>
+    <li><span class="check">✓</span> Redirect URI — Terdeteksi</li>
+    <li><span class="check">✓</span> Calendar ID — Terdeteksi</li>
+  </ul>
+
+  
+  <h2>TAHAP 5 — Hubungkan Google Calendar (OAuth Flow)</h2>
+
+  <div class="step">
+    <div class="step-num">1</div>
+    <div class="step-body">
+      <div class="step-title">Buka halaman integrasi di web</div>
+      Login sebagai admin → Settings → Integrasi → Google Calendar.
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">2</div>
+    <div class="step-body">
+      <div class="step-title">Klik tombol "Hubungkan Google Calendar"</div>
+      Browser akan redirect ke halaman login Google. Login dengan akun Google yang Calendar-nya akan dipakai.
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">3</div>
+    <div class="step-body">
+      <div class="step-title">Berikan izin akses</div>
+      Google akan meminta izin membuat, mengedit, dan menghapus event di kalender Anda. Klik <strong>Allow / Izinkan</strong>.
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">4</div>
+    <div class="step-body">
+      <div class="step-title">Callback dan simpan token</div>
+      Google redirect ke <code>google-oauth-callback</code>. Halaman tersebut otomatis:
+      <ul>
+        <li>Memvalidasi state OAuth (anti-CSRF)</li>
+        <li>Menukar authorization code dengan access + refresh token</li>
+        <li>Menyimpan refresh token ke database (terenkripsi)</li>
+        <li>Menutup tab secara otomatis setelah 3 detik</li>
+      </ul>
+      Setelah berhasil, status di halaman Settings menjadi <span class="badge badge-green">● Terhubung</span>.
+    </div>
+  </div>
+
+  
+  <h2>TAHAP 6 — Tes Koneksi</h2>
+
+  <p>Di halaman Settings → Integrasi → Google Calendar, klik tombol <strong>[Tes Koneksi]</strong>.</p>
+  <p>Sistem akan memverifikasi:</p>
+  <ul>
+    <li>Access/refresh token masih valid</li>
+    <li>Calendar ID dapat diakses</li>
+    <li>Permission mencukupi (create/update/delete events)</li>
+  </ul>
+  <p>Hasil sukses: <span class="badge badge-green">✓ Google Calendar berhasil terhubung</span></p>
+  <p>Hasil gagal akan menampilkan penyebab: token kedaluwarsa, Calendar ID salah, permission kurang, dll.</p>
+
+  
+  <h2>TAHAP 7 — Uji Create / Edit / Delete Agenda</h2>
+
+  <div class="card">
+    <div class="card-title">Create Agenda</div>
+    <ol>
+      <li>Buka modul Agenda → klik tombol Buat Agenda</li>
+      <li>Isi form dan simpan</li>
+      <li>Sistem menyimpan agenda ke database CI4</li>
+      <li>Sistem otomatis membuat event di Google Calendar</li>
+      <li>Status kolom <code>google_sync_status</code> menjadi <code>synced</code></li>
+      <li>Di detail agenda tampil badge <span class="badge badge-green">Synced</span> dan waktu sync terakhir</li>
+      <li>Buka Google Calendar — event harus muncul</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Edit Agenda</div>
+    <ol>
+      <li>Edit agenda yang sudah memiliki <code>google_event_id</code></li>
+      <li>Sistem meng-<em>update</em> event yang sama di Google Calendar (tidak membuat event baru)</li>
+      <li>Status tetap <code>synced</code>, <code>google_sync_error</code> dibersihkan</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Delete Agenda</div>
+    <ol>
+      <li>Hapus agenda dari modul Agenda</li>
+      <li>Jika agenda memiliki <code>google_event_id</code>, sistem mencoba hapus event dari Google Calendar</li>
+      <li>Jika event sudah tidak ada di Google Calendar (404), sistem tetap melanjutkan hapus lokal tanpa error</li>
+      <li>Agenda lokal terhapus (mengikuti soft-delete/hard-delete existing)</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Retry Sync (agenda gagal)</div>
+    <ol>
+      <li>Agenda dengan <code>google_sync_status = failed</code> menampilkan badge <span class="badge badge-red">Sync Failed</span> dan tombol 🔄 di detail modal</li>
+      <li>Klik tombol 🔄 → sistem mencoba sync ulang satu agenda</li>
+      <li>Atau gunakan tombol <strong>[Sinkronkan Agenda]</strong> di halaman Settings untuk sync batch semua agenda <code>pending</code>/<code>failed</code></li>
+    </ol>
+  </div>
+
+  
+  <h2>TAHAP 8 — Disconnect Google Calendar</h2>
+
+  <p>Di halaman Settings → Integrasi → Google Calendar, klik <strong>[Putuskan Koneksi]</strong>.</p>
+  <ul>
+    <li>Token OAuth dihapus dari database</li>
+    <li>Agenda lokal tidak terhapus</li>
+    <li><code>google_event_id</code> yang sudah ada dipertahankan sebagai referensi historis</li>
+    <li>Status integrasi menjadi <span class="badge badge-red">Tidak Terhubung</span></li>
+    <li>Untuk reconnect: klik kembali tombol Hubungkan Google Calendar</li>
+  </ul>
+
+  
+  <hr />
+  <h2>Detail Perbaikan Security</h2>
+
+  <table>
+    <thead><tr><th>Kerentanan</th><th>File</th><th>Perbaikan</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>SQL Injection</td>
+        <td><code>KegiatanController.php:145</code><br /><code>RoController.php:91</code></td>
+        <td>Ganti interpolasi <code>$id</code> langsung ke parameterized query <code>?</code></td>
+      </tr>
+      <tr>
+        <td>Brute-force OTP</td>
+        <td><code>OtpModel.php</code></td>
+        <td>OTP dari 6 digit → 8 digit (100 juta kombinasi vs 1 juta). Hash SHA-256 di DB, tidak stored plaintext.</td>
+      </tr>
+      <tr>
+        <td>XSS di Email Template</td>
+        <td><code>EmailService.php</code></td>
+        <td>Semua variable user-supplied di-escape dengan <code>htmlspecialchars(ENT_QUOTES)</code> sebelum masuk HTML email</td>
+      </tr>
+      <tr>
+        <td>CSRF Token Predictable</td>
+        <td><code>Config/Security.php</code></td>
+        <td><code>tokenRandomize = false</code> → <code>true</code>. Token berbeda tiap request.</td>
+      </tr>
+      <tr>
+        <td>Settings Arbitrary Key Write</td>
+        <td><code>AdminController.php</code></td>
+        <td>Whitelist <code>$allowedKeys</code> — hanya key yang diizinkan yang bisa diupdate via API</td>
+      </tr>
+      <tr>
+        <td>Password terlalu pendek</td>
+        <td><code>AdminController.php</code></td>
+        <td>Validasi min_length dari 6 → 8 karakter</td>
+      </tr>
+      <tr>
+        <td>Tidak ada Rate Limiting</td>
+        <td><code>Filters/RateLimit5Filter.php</code><br /><code>Filters/RateLimit10Filter.php</code><br /><code>Config/Routes.php</code></td>
+        <td>Rate limit diterapkan di auth endpoints: login/verify-otp = 10 req/60s, register/send-otp/klien-register = 5 req/60s</td>
+      </tr>
+      <tr>
+        <td>OAuth Callback Hardcode Path</td>
+        <td><code>Views/auth/google_oauth_callback.php</code></td>
+        <td>URL inject dari PHP <code>APP_BASE_URL</code> / <code>APP_API_URL</code>. Tidak lagi hardcode <code>/api/v1/...</code>.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  
+  <h2>Detail Perbaikan Google Calendar</h2>
+
+  <table>
+    <thead><tr><th>Masalah</th><th>Perbaikan</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>cURL tidak ada timeout → hang tak terbatas</td>
+        <td>Timeout 20 detik ditambahkan ke semua request Google API</td>
+      </tr>
+      <tr>
+        <td><code>invalid_grant</code> token menyebabkan loop error</td>
+        <td>Auto-disconnect: jika Google API return <code>invalid_grant</code>, koneksi otomatis di-reset dan admin perlu authorize ulang</td>
+      </tr>
+      <tr>
+        <td>Update event ke Google Calendar yang sudah dihapus manual → error 404 tidak ditangani</td>
+        <td>Handle 404: jika event tidak ditemukan saat update, fallback ke create event baru dan update <code>google_event_id</code></td>
+      </tr>
+      <tr>
+        <td><code>google_sync_error</code> belum ada di tabel <code>schedules</code></td>
+        <td>Migration baru menambahkan kolom <code>google_sync_error TEXT NULL</code></td>
+      </tr>
+      <tr>
+        <td>Pesan error tidak tersimpan ke DB saat sync gagal</td>
+        <td>ScheduleController &amp; GoogleCalendarController menyimpan sanitized error message ke <code>google_sync_error</code></td>
+      </tr>
+      <tr>
+        <td>Credential/token mungkin masuk ke log</td>
+        <td>Fungsi <code>_sanitizeSyncError()</code> menghapus pola credential sebelum disimpan ke DB atau log</td>
+      </tr>
+      <tr>
+        <td><code>oauth_state</code> tidak dibersihkan setelah connect</td>
+        <td>State OAuth dihapus dari cache setelah callback berhasil</td>
+      </tr>
+      <tr>
+        <td>UI schedule.js tidak menampilkan error sync</td>
+        <td>Detail modal menampilkan pesan error, badge status, waktu sync, dan tombol 🔄 Retry per agenda</td>
+      </tr>
+      <tr>
+        <td>Wizard panduan hanya 4 langkah, tidak lengkap</td>
+        <td>Wizard diperluas ke 8 langkah dengan external link, instruksi detail, dan tombol Salin Redirect URI</td>
+      </tr>
+    </tbody>
+  </table>
+
+  
+  <h2>Struktur Token Storage</h2>
+
+  <div class="info">
+    Token OAuth disimpan di tabel <code>google_calendar_settings</code> (sudah ada sebelumnya). Refresh token dienkripsi menggunakan CI4 Encryption service sebelum disimpan. Access token tidak disimpan ke database — selalu di-generate ulang dari refresh token saat dibutuhkan. Token tidak pernah dikirim ke browser atau dicatat di log.
+  </div>
+
+  
+  <h2>Flow Sinkronisasi (Ringkasan)</h2>
+
+  <pre><code>Admin buat/edit/hapus Agenda
+       ↓
+ScheduleController (validasi + simpan ke DB CI4)
+       ↓
+DB CI4 = SOURCE OF TRUTH
+       ↓
+GoogleCalendarService::syncAgenda() / deleteEvent()
+       ↓
+Google Calendar API
+       ↓
+Berhasil: google_sync_status = synced, google_event_id tersimpan
+Gagal:    google_sync_status = failed, google_sync_error tersimpan
+          Agenda TETAP tersimpan — tidak rollback</code></pre>
+
+  
+  <h2>Catatan Environment Production</h2>
+
+  <ul>
+    <li>Ganti <code>http://</code> → <code>https://</code> di <code>GOOGLE_REDIRECT_URI</code> dan di Google Cloud Console</li>
+    <li>Update <code>GOOGLE_REDIRECT_URI</code> di <code>.env</code> ke domain production</li>
+    <li>Tambahkan URL production ke <em>Authorized Redirect URIs</em> di Google Cloud Console</li>
+    <li>Uncomment <code>// 'forcehttps'</code> di <code>app/Config/Filters.php</code> bagian <code>$required['before']</code></li>
+    <li>Set <code>CI_ENVIRONMENT = production</code> di <code>.env</code></li>
+    <li>Pastikan CI4 file cache dapat di-write (<code>writable/cache/</code>) untuk rate limiter</li>
+  </ul>
+
+  <div class="footer">Made with IBM Bob</div>
+</div>
+</body>
+</html>
